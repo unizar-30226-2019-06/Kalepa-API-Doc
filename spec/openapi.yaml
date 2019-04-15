@@ -1049,15 +1049,15 @@ components:
           type: integer
           format: int32
           description: |-
-            0 - No errors
-              1 - Duplicate 
-              2 - Not found
+             0 - No errors
+             1 - Duplicate 
+             2 - Not found
              3 - Worng Data
              4 - No permisiones
              5 - Not logged in
              6 - Bad JSON format
              99 - Other
-          default: '0'
+          default: 0
         type:
           type: string
           default: info
