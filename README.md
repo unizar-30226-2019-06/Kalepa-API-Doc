@@ -1,5 +1,5 @@
 # Kalepa-API OpenAPI Specification
-[![Build Status](https://travis-ci.com/unizar-30226-2019-06/Kalepa-API-Doc.svg?branch=master)](https://travis-ci.com/unizar-30226-2019-06/Kalepa-API-Doc)
+[![Build Status](https://travis-ci.org/unizar-30226-2019-06/Kalepa-API-Doc.svg?branch=master)](https://travis-ci.com/unizar-30226-2019-06/Kalepa-API-Doc)
 ## Steps to finish
 
 1. Enable [Travis](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A) for your repository (**note**: you already have `.travis.yml` file)
