@@ -1,4 +1,4 @@
-specFileName: openapi.yaml
+
 apiTitle: Kalepa-API
 splitSpec: false
 codeSamples: true

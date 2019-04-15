@@ -1,1056 +1,249 @@
+# This is an **example** API to demonstrate features of OpenAPI specification.
+# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
+
 openapi: 3.0.0
 info:
-  title: Kalepa API
-  description: |
-    This is the api for Kalepa web and movil
-    [https://kalepa-api.herokuapp.com/](https://kalepa-api.herokuapp.com/)
-  termsOfService: http://swagger.io/terms/
+  version: '1.0.0' # Your API version
+  # It can be any string but it is better to use semantic versioning: http://semver.org/
+  # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
+  
+  title: Example.com # Replace with your API title
+  # Keep it simple. Don't add "API" or version at the end of the string.
+
+  termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
   contact:
-    email: 738866@unizar.es
+    email: contact@example.com # [Optional] Replace with your contact email
+    url: 'http://example.com/contact' # [Optional] Replace with link to your contact form
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.0.2-oas3
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  x-logo:
+    url: 'https://apis.guru/openapi-template/logo.png'
+  
+  # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
+  description: |
+    This is an **example** API to demonstrate features of OpenAPI specification
+    # Introduction
+    This specification is intended to to be a good starting point for describing your API in 
+    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
+    It also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and 
+    [ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few 
+    [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).
+
+    # OpenAPI Specification
+    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
+    allows both humans and computers to discover and understand the capabilities of the service without access to source
+    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
+    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
+    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
 externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
-servers:
-- url: https://virtserver.swaggerhub.com/unizar-30226-2019-0/Kalepa-API/1.0.0
-- url: http://virtserver.swaggerhub.com/unizar-30226-2019-0/Kalepa-API/1.0.0
+  description: Find out how to create Github repo for your OpenAPI spec.
+  url: 'https://github.com/Rebilly/generator-openapi-repo'
+
+# A list of tags used by the specification with additional metadata.
+# The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
-- name: user
-  description: Everything about an user
-  externalDocs:
-    description: Find out more (WIP)
-    url: http://kalepa-api.herokuapp.com
-- name: product
-  description: Products in sell by an user
-- name: user
-  description: Operations about user
-  externalDocs:
-    description: Find out more about our store
-    url: http://swagger.io
+  - name: Echo
+    description: Example echo operations
+  - name: User
+    description: Operations about user
+servers:
+  - url: 'http://example.com/api/v1'
+  - url: 'https://example.com/api/v1'
+
+# Holds the relative paths to the individual endpoints. The path is appended to the
+# basePath in order to construct the full URL. 
 paths:
-  /product:
-    post:
-      tags:
-      - product
-      summary: Add a new product to the store
-      operationId: addproduct
-      requestBody:
-        description: product object that needs to be added to the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewProduct'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/NewProduct'
-        required: true
-      responses:
-        405:
-          description: Invalid input
-        default:
-          description: successful operation, return product id
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - write:products
-  /product/findByCats:
-    get:
-      tags:
-      - product
-      summary: Finds products by tags
-      description: Muliple tags can be provided with comma separated strings. Use\
-        \ tag1, tag2, tag3 for testing.
-      operationId: findproductsByTags
-      parameters:
-      - name: tags
+  '/users/{username}': # path parameter in curly braces
+
+    # parameters list that are used with each operation for this path
+    parameters:
+      - name: pretty_print
         in: query
-        description: Tags to filter by
-        required: true
-        style: form
-        explode: true
+        description: Pretty print response
         schema:
-          type: array
-          items:
+          type: boolean
+    get: # documentation for GET operation for this path
+      tags:
+        - User
+      
+      # summary is up to 120 symbold but we recommend to be shortest as possible
+      summary: Get user by user name
+      
+      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
+      description: |
+        Some description of the operation. 
+        You can use `markdown` here.
+      
+      # operationId should be unique across the whole specification
+      operationId: getUserByName
+      
+      # list of parameters for the operation
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched
+          required: true
+          schema:
             type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-        400:
-          description: Invalid tag value
-      deprecated: false
+        - name: with_email
+          in: query
+          description: Filter users without email
+          schema:
+            type: boolean
+      
+      # security schemas applied to this operation
       security:
-      - users_auth:
-        - write:products
-  /product/{product_id}:
-    get:
-      tags:
-      - product
-      summary: Find product by ID
-      description: Returns a single product
-      operationId: getproductById
-      parameters:
-      - name: product_id
-        in: path
-        description: ID of product to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: successful operation
+        - main_auth:
+            - 'read:users' # for auth2 provide list of scopes here
+        - api_key: []
+      responses: # list of responses
+        '200':
+          description: Success
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Product'
-        400:
-          description: Invalid ID supplied
-        404:
-          description: product not found
-      security:
-      - api_key: []
+            application/json: # operation response mime type
+              schema: # response schema can be specified for each response
+                $ref: '#/components/schemas/User'
+              example: # response example
+                username: user1
+                email: user@example.com
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+    # documentation for PUT operation for this path
     put:
       tags:
-      - product
-      summary: Updates a product in the store with form data
-      operationId: updateproductWithForm
-      parameters:
-      - name: product_id
-        in: path
-        description: ID of product that needs to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        description: Updated the product info
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        405:
-          description: Invalid input
-      security:
-      - users_auth:
-        - write:products
-    delete:
-      tags:
-      - product
-      summary: Deletes a product
-      operationId: deleteproduct
-      parameters:
-      - name: api_key
-        in: header
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: product_id
-        in: path
-        description: product id to delete
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        400:
-          description: Invalid ID supplied
-        404:
-          description: product not found
-      security:
-      - users_auth:
-        - write:products
-  /products/{product_id}/addPhoto:
-    post:
-      tags:
-      - product
-      summary: uploads an image
-      operationId: uploadFile
-      parameters:
-      - name: product_id
-        in: path
-        description: ID of product to update
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/body'
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - write:products
-  /store/inventory:
-    get:
-      tags:
-      - store
-      summary: Returns product inventories by boost and location if exist on request
-      description: Returns a map of status codes to quantities
-      operationId: getInventory
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-      security:
-      - api_key: []
-  /user:
-    get:
-      tags:
-      - user
-      summary: Get logged user info
-      operationId: getUser
-      parameters:
-      - name: id
-        in: query
-        description: The name that needs to be fetched. Use user1 for testing.
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        400:
-          description: Some error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-      security:
-      - users_auth:
-        - loged:user
-    put:
-      tags:
-      - user
-      summary: Updated logged user
+        - User
+      summary: Updated user
       description: This can only be done by the logged in user.
       operationId: updateUser
       parameters:
-      - name: id
-        in: query
-        description: id that need to be updated
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: username
+          in: path
+          description: The name that needs to be updated
+          required: true
+          schema:
+            type: string
+      security:
+        - main_auth:
+            - 'write:users'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+      # request body documentation
       requestBody:
-        description: Updated full user object (id is not requiered)
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FullUser'
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Updated user object
         required: true
+  /echo: # path parameter in curly braces
+    post: # documentation for POST operation for this path
+      tags:
+        - Echo
+      summary: Echo test
+      description: Receive the exact message you've sent
+      operationId: echo
+      security:
+        - api_key: []
+        - basic_auth: []
       responses:
-        default:
-          description: successful operation
+        '200':
+          description: OK
+          # document headers for this response
+          headers:
+            X-Rate-Limit: # Header name
+              description: calls per hour allowed by the user
+              schema: # Header schema
+                type: integer
+                format: int32
+            X-Expires-After:
+              $ref: '#/components/headers/ExpiresAfter'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                type: string
+              examples:
+                response:
+                  value: Hello world!
             application/xml:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-    post:
-      tags:
-      - user
-      summary: Create new user
-      description: This can be used wihtout login
-      operationId: createUser
+                type: string
+            text/csv:
+              schema:
+                type: string
       requestBody:
-        description: Created user object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewUser'
-        required: true
-      responses:
-        default:
-          description: successful operation, return user id on message
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-    delete:
-      tags:
-      - user
-      summary: Delete logged user
-      description: This can only be done by the logged in user.
-      operationId: deleteUser
-      parameters:
-      - name: id
-        in: query
-        description: The id that needs to be deleted
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-  /user/follows:
-    get:
-      tags:
-      - user
-      summary: Get logged user follow products
-      description: This can only be done by the logged in user.
-      operationId: userWishList
-      parameters:
-      - name: id
-        in: query
-        description: The id of the user
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        400:
-          description: Some error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        title:
-                          type: string
-                          example: Gafas
-                        descript:
-                          type: string
-                          example: Descripcion del producto
-                        price:
-                          type: number
-                          example: 9.99
-                        main_image:
-                          type: string
-                          format: url
-                          example: http://images.com/134h1u3
-            application/xml:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        title:
-                          type: string
-                          example: Gafas
-                        descript:
-                          type: string
-                          example: Descripcion del producto
-                        price:
-                          type: number
-                          example: 9.99
-                        main_image:
-                          type: string
-                          format: url
-                          example: http://images.com/134h1u3
-      security:
-      - users_auth:
-        - loged:user
-  /user/login:
-    post:
-      tags:
-      - user
-      summary: Logs user into the system
-      operationId: loginUser
-      requestBody:
-        description: Created user object
-        content:
-          application/json:
+              type: string
+              example: Hello world!
+          application/xml:
             schema:
-              $ref: '#/components/schemas/body_1'
+              type: string
+              example: Hello world!
+        description: Echo payload
         required: true
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-  /user/logout:
-    get:
-      tags:
-      - user
-      summary: Logs out current logged in user session
-      operationId: logoutUser
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-  /profile/{nick}:
-    get:
-      tags:
-      - user
-      summary: Get user info by user nick
-      operationId: getUserByNick
-      parameters:
-      - name: nick
-        in: path
-        description: The name that needs to be fetched. Use user1 for testing.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        400:
-          description: Some error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-  /user/{id}:
-    get:
-      tags:
-      - user
-      summary: Get user info by user id
-      description: This can only be done by the logged mod user.
-      operationId: getUserById
-      parameters:
-      - name: id
-        in: path
-        description: The name that needs to be fetched. Use user1 for testing.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      responses:
-        400:
-          description: Some error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-      security:
-      - users_auth:
-        - loged:user
-        - moder:user
-    put:
-      tags:
-      - user
-      summary: Updated user
-      description: This can only be done by the logged mod user.
-      operationId: updateUserById
-      parameters:
-      - name: id
-        in: path
-        description: id that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      requestBody:
-        description: Updated full user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FullUser'
-        required: true
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-        - moder:user
-    delete:
-      tags:
-      - user
-      summary: Delete user
-      description: This can only be done by the logged mod user.
-      operationId: deleteUserById
-      parameters:
-      - name: id
-        in: path
-        description: The id that needs to be deleted
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-        - moder:user
-  /user/{id}/ban:
-    put:
-      tags:
-      - user
-      summary: Ban user
-      description: This can only be done by the logged mod user.
-      operationId: banUser
-      parameters:
-      - name: id
-        in: path
-        description: user id to ban
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      requestBody:
-        description: Updated full user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/body_2'
-        required: true
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-        - moder:user
-  /user/{id}/mod:
-    put:
-      tags:
-      - user
-      summary: Make mod a user
-      description: This can only be done by the logged mod user.
-      operationId: modUser
-      parameters:
-      - name: id
-        in: path
-        description: user id to ban
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-      responses:
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - users_auth:
-        - loged:user
-        - moder:user
-  /users:
-    get:
-      tags:
-      - user
-      summary: Get the list of users
-      operationId: listUsers
-      responses:
-        200:
-          description: unsuccessful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: The json list of users
-          content:
-            application/json:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
+        
+# An object to hold reusable parts that can be used across the spec
 components:
   schemas:
-    FullUser:
-      required:
-      - avatar
-      - dni
-      - first_name
-      - fnac
-      - id
-      - is_mod
-      - last_name
-      - mail
-      - nick
-      - phone
-      - place
-      - points
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        nick:
-          type: string
-          example: Alice
-        first_name:
-          type: string
-          example: Foo
-        last_name:
-          type: string
-          example: Bar
-        mail:
-          type: string
-          example: mail@email.com
-        phone:
-          type: integer
-          example: 666999222
-        is_mod:
-          type: boolean
-        ban_reason:
-          type: string
-          example: Razon expulsion
-        points:
-          type: number
-        avatar:
-          type: string
-          example: http://images.com/235gadfg
-        fnac:
-          type: string
-          format: date
-        dni:
-          type: integer
-          example: 123456789
-        place:
-          type: string
-          example: Madrid
-        token:
-          type: string
-          example: 2sf78gsf68hsf5asfh68afh68a58fha68f
-      xml:
-        name: FullUser
+    Email:
+      description: User email address
+      type: string
+      format: test
+      example: john.smith@example.com
     User:
-      required:
-      - avatar
-      - first_name
-      - fnac
-      - id
-      - last_name
-      - mail
-      - nick
-      - phone
-      - place
-      - points
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-        nick:
+        username:
+          description: User supplied username
           type: string
-          example: Alice
-        first_name:
+          minLength: 4
+          example: John78
+        firstName:
+          description: User first name
           type: string
-          example: Foo
-        last_name:
+          minLength: 1
+          example: John
+        lastName:
+          description: User last name
           type: string
-          example: Bar
-        mail:
-          type: string
-          example: mail@email.com
-        phone:
-          type: integer
-          example: 666999222
-        points:
-          type: number
-        avatar:
-          type: string
-          example: http://images.com/235gadfg
-        fnac:
-          type: string
-          format: date
-        place:
-          type: string
-          example: Madrid
-      xml:
-        name: User
-    NewUser:
-      required:
-      - dni
-      - first_name
-      - fnac
-      - last_name
-      - mail
-      - nick
-      - pass_hash
-      - phone
-      - place
-      type: object
-      properties:
-        nick:
-          type: string
-          example: Alice
-        first_name:
-          type: string
-          example: Foo
-        last_name:
-          type: string
-          example: Bar
-        mail:
-          type: string
-          example: mail@email.com
-        pass:
-          type: string
-          example: pass
-        phone:
-          type: integer
-          example: 666999222
-        fnac:
-          type: string
-          format: date
-        dni:
-          type: integer
-          example: 123456789
-        place:
-          type: string
-          example: Madrid
-      xml:
-        name: NewUser
-    Product:
-      required:
-      - categories
-      - descript
-      - followers
-      - id
-      - photo_urls
-      - place
-      - price
-      - publish_date
-      - title
-      - user_id
-      - visits
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        descript:
-          type: string
-          example: This product is wonderful
-        user_id:
-          type: integer
-          format: int64
-        price:
-          type: number
-        categories:
-          type: array
-          xml:
-            name: category
-            wrapped: true
-          items:
-            type: string
-            example: Moda
-        title:
-          type: string
-          example: Producto Molongo
-        bid:
-          type: string
-          format: date
-        boost_date:
-          type: string
-          format: date
-        visits:
-          type: integer
-          format: int32
-        followers:
-          type: integer
-          format: int32
-        publish_date:
-          type: string
-          format: date
-        photo_urls:
-          type: array
-          xml:
-            name: photoUrl
-            wrapped: true
-          items:
-            type: string
-            example: http://images.com/123af3
-        place:
-          type: string
-          description: location of the sell
-          example: Zaragoza
-        is_removed:
-          type: boolean
-        ban_reason:
-          type: string
-          example: Razon Baneo
-      xml:
-        name: Product
-    NewProduct:
-      required:
-      - categories
-      - descript
-      - photo_urls
-      - place
-      - price
-      - title
-      - user_id
-      type: object
-      properties:
-        descript:
-          type: string
-          example: This product is wonderful
-        user_id:
-          type: integer
-          format: int64
-        price:
-          type: number
-        categories:
-          type: array
-          xml:
-            name: category
-            wrapped: true
-          items:
-            type: string
-            example: Moda
-        title:
-          type: string
-          example: Producto Molongo
-        bid:
-          type: string
-          format: date
-        photo_urls:
-          type: array
-          xml:
-            name: photoUrl
-            wrapped: true
-          items:
-            type: string
-            example: http://images.com/123af3
-        place:
-          type: string
-          description: location of the sell
-          example: Zaragoza
-      xml:
-        name: NewProduct
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: "0 - No errors\n  1 - Duplicate \n  2 - Not found\n 3 - Worng\
-            \ Data\n 4 - No permisiones\n 5 - Not logged in\n 6 - Bad JSON format\n\
-            \ 99 - Other"
-          format: int32
-        type:
-          type: string
-          description: Type of the message, info, error
-          example: info
-          default: info
-        message:
-          type: string
-          description: Infomation or error description
-          example: All ok
-    body:
-      required:
-      - image_url
-      type: object
-      properties:
-        image_url:
-          type: string
-          description: url of the image
-          format: binary
-    body_1:
-      properties:
-        nick:
-          type: string
-          example: Pepito
-        pass:
-          type: string
-          example: pass
-        remember:
-          type: boolean
-    body_2:
-      properties:
-        ban_reason:
-          type: string
-          example: Ban for scam
-        ban_until:
-          type: string
-          format: date
+          minLength: 1
+          example: Smith
+        email:
+          $ref: '#/components/schemas/Email'
+  headers:
+    ExpiresAfter:
+      description: date in UTC when token expires
+      schema:
+        type: string
+        format: date-time
+  # Security scheme definitions that can be used across the specification.
   securitySchemes:
-    users_auth:
-      type: oauth2
+    main_auth: # security definition name (you can name it as you want)
+      # the following options are specific to oauth2 type
+      type: oauth2 # authorization type, one of: oauth2, apiKey, http
       flows:
         implicit:
-          authorizationUrl: http://productstore.swagger.io/oauth/dialog
+          authorizationUrl: 'http://example.com/api/oauth/dialog'
           scopes:
-            write:products: modify products in your account
-            moder:user: edit user info
-            loged:user: log out session
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+            'read:users': read users info
+            'write:users': modify or remove users
+    api_key:  # security definition name (you can name it as you want)
+      type: apiKey 
+      # The following options are specific to apiKey type
+      in: header # Where API key will be passed: header or query
+      name: api_key # API key parameter name
+    basic_auth: # security definition name (you can name it as you want)
+      type: http
+      scheme: basic
