@@ -74,7 +74,7 @@ paths:
       summary: Add a new product to the store
       operationId: addproduct
       responses:
-        '405':
+        '400':
           description: Invalid input
         default:
           description: 'successful operation, return product id'
@@ -98,45 +98,7 @@ paths:
               $ref: '#/components/schemas/NewProduct'
         description: product object that needs to be added to the store
         required: true
-  /product/findByCats:
-    get:
-      tags:
-        - product
-      summary: Finds products by tags
-      description: >-
-        Muliple tags can be provided with comma separated strings. Use\ \ tag1,
-        tag2, tag3 for testing.
-      operationId: findproductsByTags
-      parameters:
-        - name: tags
-          in: query
-          description: Tags to filter by
-          required: true
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-        '400':
-          description: Invalid tag value
-      security:
-        - users_auth:
-            - 'write:products'
-      deprecated: false
+
   '/product/{product_id}':
     get:
       tags:
@@ -164,14 +126,16 @@ paths:
                 $ref: '#/components/schemas/Product'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: product not found
-      security:
-        - api_key: []
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
     put:
       tags:
         - product
       summary: Updates a product in the store with form data
+      description: User must be logged and the owner of the product
       operationId: updateproductWithForm
       parameters:
         - name: product_id
@@ -189,22 +153,18 @@ paths:
             - 'write:products'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/NewProduct'
         description: Updated the product info
         required: true
     delete:
       tags:
         - product
       summary: Deletes a product
+      description: User must be logged and the owner of the product
       operationId: deleteproduct
       parameters:
-        - name: api_key
-          in: header
-          required: false
-          schema:
-            type: string
         - name: product_id
           in: path
           description: product id to delete
@@ -214,29 +174,13 @@ paths:
             format: int64
       responses:
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: product not found
-      security:
-        - users_auth:
-            - 'write:products'
-  '/products/{product_id}/addPhoto':
-    post:
-      tags:
-        - product
-      summary: uploads an image
-      operationId: uploadFile
-      parameters:
-        - name: product_id
-          in: path
-          description: ID of product to update
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
+          description: Invalid ID supplied / not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful action
           content:
             application/json:
               schema:
@@ -244,18 +188,7 @@ paths:
       security:
         - users_auth:
             - 'write:products'
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                image_url:
-                  description: url of the image
-                  type: string
-                  format: binary
-              required:
-                - image_url
+  
   /store/inventory:
     get:
       tags:
@@ -301,8 +234,8 @@ paths:
     get:
       tags:
         - user
-      summary: Get logged user info
-      operationId: getUser
+      summary: Get Product info
+      operationId: getProduct
       parameters:
         - name: id
           in: query
@@ -335,9 +268,9 @@ paths:
     put:
       tags:
         - user
-      summary: Updated logged user
+      summary: Updated product
       description: This can only be done by the logged in user.
-      operationId: updateUser
+      operationId: updateProduct
       parameters:
         - name: id
           in: query
@@ -368,9 +301,9 @@ paths:
     delete:
       tags:
         - user
-      summary: Delete logged user
+      summary: Delete product
       description: This can only be done by the logged in user.
-      operationId: deleteUser
+      operationId: deleteProduct
       parameters:
         - name: id
           in: query
@@ -379,6 +312,15 @@ paths:
           schema:
             type: string
       responses:
+        '400':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
         default:
           description: successful operation
           content:
@@ -391,13 +333,252 @@ paths:
       security:
         - users_auth:
             - 'loged:user'
+
+  /bids:
+    get:
+      tags:
+        - product
+      summary: Get bids of products
+      operationId: getBids
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bid'
+
+  '/bid/{product_id}':
+    get:
+      tags:
+        - product
+      summary: Get bids of product id
+      operationId: getBidbyId
+      parameters:
+        - name: id
+          in: path
+          description: The id of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bid'
+
+  /products:
+    get:
+      tags:
+        - product
+      summary: Get list of products
+      operationId: getProducts
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductLite'
+
+  '/product/{product_id}/bidup':
+    put:
+      tags:
+        - product
+      summary: Put on bid product
+      operationId: bidProduct
+      parameters:
+        - name: id
+          in: path
+          description: The id of the product
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                bid_until:
+                  type: string
+                  format: date
+        description: Ban parameters
+        required: true
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/product/{product_id}/biddown':
+    put:
+      tags:
+        - product
+      summary: Put on bid product
+      operationId: unbidProduct
+      parameters:
+        - name: id
+          in: path
+          description: The id of the product
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/product/{product_id}/follow':
+    post:
+      tags:
+        - product
+      summary: Logged user follow id product
+      operationId: followProductId
+      parameters:
+        - name: id
+          in: path
+          description: The id of the product
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          description: The id of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/product/{product_id}/ban':
+    put:
+      tags:
+        - product
+      summary: Ban product
+      operationId: banProduct
+      parameters:
+        - name: id
+          in: path
+          description: The id of the product
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                ban_reason:
+                  type: string
+                  example: Ban for scam
+                ban_until:
+                  type: string
+                  format: date
+        description: Ban parameters
+        required: true
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+            - 'moder:user'
+
   /user/follows:
     get:
       tags:
         - user
       summary: Get logged user follow products
       description: This can only be done by the logged in user.
-      operationId: userWishList
+      operationId: userFollowsList
       parameters:
         - name: id
           in: query
@@ -692,6 +873,7 @@ paths:
                   format: date
         description: Updated full user object
         required: true
+
   '/user/{id}/mod':
     put:
       tags:
@@ -740,15 +922,6 @@ paths:
           description: The json list of users
           content:
             application/json:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
-            application/xml:
               schema:
                 properties:
                   length:
@@ -882,6 +1055,7 @@ components:
           example: Madrid
       xml:
         name: User
+
     NewUser:
       type: object
       required:
@@ -924,6 +1098,7 @@ components:
           example: Madrid
       xml:
         name: NewUser
+
     Product:
       type: object
       required:
@@ -935,6 +1110,7 @@ components:
         - publish_date
         - categories
         - photo_urls
+        - main_photo
         - place
         - followers
         - visits
@@ -976,6 +1152,9 @@ components:
         publish_date:
           type: string
           format: date
+        main_photo:
+          type: string
+          example: 'http://images.com/123af3'
         photo_urls:
           type: array
           xml:
@@ -988,24 +1167,29 @@ components:
           type: string
           description: location of the sell
           example: Zaragoza
-        is_removed:
-          type: boolean
         ban_reason:
           type: string
           example: Razon Baneo
       xml:
         name: Product
-    NewProduct:
+
+    ProductLite:
       type: object
       required:
+        - id
         - title
         - price
         - user_id
         - descript
+        - publish_date
         - categories
-        - photo_urls
+        - main_photo
         - place
+        - followers
       properties:
+        id:
+          type: integer
+          format: int64
         descript:
           type: string
           example: This product is wonderful
@@ -1028,6 +1212,78 @@ components:
         bid:
           type: string
           format: date
+        boost_date:
+          type: string
+          format: date
+        followers:
+          type: integer
+          format: int32
+        publish_date:
+          type: string
+          format: date
+        main_photo:
+          type: string
+          example: 'http://images.com/123af3'
+        place:
+          type: string
+          description: location of the sell
+          example: Zaragoza
+    
+    Bid:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          format: int64
+        bid_until:
+          type: string
+          format: date
+        product_title:
+          type: string
+          example: "Gafas de Sol Chulas"
+        product_img:
+          type: string
+          example: "http://images.com/134135613613"
+        max_bid:
+          type: number
+          example: 9.99
+        max_bid_user:
+          type: integer
+          format: int64      
+
+    NewProduct:
+      type: object
+      required:
+        - title
+        - price
+        - descript
+        - categories
+        - photo_urls
+        - main_photo
+        - place
+      properties:
+        descript:
+          type: string
+          example: This product is wonderful
+        price:
+          type: number
+        categories:
+          type: array
+          xml:
+            name: category
+            wrapped: true
+          items:
+            type: string
+            example: Moda
+        title:
+          type: string
+          example: Producto Molongo
+        bid:
+          type: string
+          format: date
+        main_photo:
+          type: string
+          example: 'http://images.com/123af3'
         photo_urls:
           type: array
           xml:
@@ -1042,6 +1298,7 @@ components:
           example: Zaragoza
       xml:
         name: NewProduct
+    
     ApiResponse:
       type: object
       properties:
@@ -1066,4 +1323,4 @@ components:
         message:
           type: string
           description: Infomation or error description
-          example: All ok
+          example: All Ok/Error
