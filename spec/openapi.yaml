@@ -107,7 +107,7 @@ paths:
       description: Returns a single product
       operationId: getproductById
       parameters:
-        - name: product_id
+        - name: id
           in: path
           description: ID of product to return
           required: true
@@ -138,7 +138,7 @@ paths:
       description: User must be logged and the owner of the product
       operationId: updateproductWithForm
       parameters:
-        - name: product_id
+        - name: id
           in: path
           description: ID of product that needs to be updated
           required: true
@@ -165,7 +165,7 @@ paths:
       description: User must be logged and the owner of the product
       operationId: deleteproduct
       parameters:
-        - name: product_id
+        - name: id
           in: path
           description: product id to delete
           required: true
