@@ -21,11 +21,7 @@ tags:
       url: 'http://kalepa-api.herokuapp.com'
   - name: product
     description: Products in sell by an user
-  - name: user
-    description: Operations about user
-    externalDocs:
-      description: Find out more about our store
-      url: 'http://swagger.io'
+    
 paths:
   /echo: # path parameter in curly braces
     post: # documentation for POST operation for this path
