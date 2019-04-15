@@ -99,7 +99,7 @@ paths:
         description: product object that needs to be added to the store
         required: true
 
-  '/product/{product_id}':
+  '/product/{id}':
     get:
       tags:
         - product
@@ -363,7 +363,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Bid'
 
-  '/bid/{product_id}':
+  '/bid/{id}':
     get:
       tags:
         - product
@@ -422,7 +422,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/ProductLite'
 
-  '/product/{product_id}/bidup':
+  '/product/{id}/bidup':
     put:
       tags:
         - product
@@ -462,7 +462,7 @@ paths:
         - users_auth:
             - 'loged:user'
 
-  '/product/{product_id}/biddown':
+  '/product/{id}/biddown':
     put:
       tags:
         - product
@@ -492,7 +492,7 @@ paths:
         - users_auth:
             - 'loged:user'
 
-  '/product/{product_id}/follow':
+  '/product/{id}/follow':
     post:
       tags:
         - product
@@ -528,7 +528,7 @@ paths:
         - users_auth:
             - 'loged:user'
 
-  '/product/{product_id}/ban':
+  '/product/{id}/ban':
     put:
       tags:
         - product
