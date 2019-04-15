@@ -661,7 +661,7 @@ paths:
       security:
         - users_auth:
             - 'loged:user'
-  /user/login:
+  /login:
     post:
       tags:
         - user
@@ -692,7 +692,7 @@ paths:
                   type: boolean
         description: Created user object
         required: true
-  /user/logout:
+  /logout:
     get:
       tags:
         - user
