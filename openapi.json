@@ -1728,6 +1728,7 @@
           "descript",
           "publish_date",
           "categories",
+          "bid_date",
           "photo_urls",
           "main_photo",
           "place",
@@ -1765,7 +1766,7 @@
             "type": "string",
             "example": "Producto Molongo"
           },
-          "bid": {
+          "bid_date": {
             "type": "string",
             "format": "date"
           },
