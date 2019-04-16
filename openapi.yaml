@@ -164,6 +164,12 @@ paths:
             type: integer
             format: int64
       responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
         '405':
           description: Invalid input
       security:
@@ -1215,7 +1221,7 @@ components:
         title:
           type: string
           example: Producto Molongo
-        bid:
+        bid_date:
           type: string
           format: date
         boost_date:
@@ -1282,7 +1288,7 @@ components:
         title:
           type: string
           example: Producto Molongo
-        bid:
+        bid_date:
           type: string
           format: date
         main_img:

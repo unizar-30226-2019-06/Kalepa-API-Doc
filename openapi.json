@@ -226,6 +226,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
           "405": {
             "description": "Invalid input"
           }
@@ -1860,7 +1870,7 @@
             "type": "string",
             "example": "Producto Molongo"
           },
-          "bid": {
+          "bid_date": {
             "type": "string",
             "format": "date"
           },
@@ -1950,7 +1960,7 @@
             "type": "string",
             "example": "Producto Molongo"
           },
-          "bid": {
+          "bid_date": {
             "type": "string",
             "format": "date"
           },
