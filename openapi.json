@@ -1730,7 +1730,7 @@
           "categories",
           "bid_date",
           "photo_urls",
-          "main_photo",
+          "main_img",
           "place",
           "followers",
           "visits"
@@ -1786,7 +1786,7 @@
             "type": "string",
             "format": "date"
           },
-          "main_photo": {
+          "main_img": {
             "type": "string",
             "example": "http://images.com/123af3"
           },
@@ -1825,7 +1825,7 @@
           "descript",
           "publish_date",
           "categories",
-          "main_photo",
+          "main_img",
           "place",
           "followers"
         ],
@@ -1876,7 +1876,7 @@
             "type": "string",
             "format": "date"
           },
-          "main_photo": {
+          "main_img": {
             "type": "string",
             "example": "http://images.com/123af3"
           },
@@ -1924,7 +1924,7 @@
           "descript",
           "categories",
           "photo_urls",
-          "main_photo",
+          "main_img",
           "place"
         ],
         "properties": {
@@ -1954,7 +1954,7 @@
             "type": "string",
             "format": "date"
           },
-          "main_photo": {
+          "main_img": {
             "type": "string",
             "example": "http://images.com/123af3"
           },
