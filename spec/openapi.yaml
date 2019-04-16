@@ -1111,7 +1111,7 @@ components:
         - categories
         - bid_date
         - photo_urls
-        - main_photo
+        - main_img
         - place
         - followers
         - visits
@@ -1153,7 +1153,7 @@ components:
         publish_date:
           type: string
           format: date
-        main_photo:
+        main_img:
           type: string
           example: 'http://images.com/123af3'
         photo_urls:
@@ -1184,7 +1184,7 @@ components:
         - descript
         - publish_date
         - categories
-        - main_photo
+        - main_img
         - place
         - followers
       properties:
@@ -1222,7 +1222,7 @@ components:
         publish_date:
           type: string
           format: date
-        main_photo:
+        main_img:
           type: string
           example: 'http://images.com/123af3'
         place:
@@ -1260,7 +1260,7 @@ components:
         - descript
         - categories
         - photo_urls
-        - main_photo
+        - main_img
         - place
       properties:
         descript:
@@ -1282,7 +1282,7 @@ components:
         bid:
           type: string
           format: date
-        main_photo:
+        main_img:
           type: string
           example: 'http://images.com/123af3'
         photo_urls:
