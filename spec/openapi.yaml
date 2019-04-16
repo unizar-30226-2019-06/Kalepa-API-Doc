@@ -148,6 +148,12 @@ paths:
       responses:
         '405':
           description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
       security:
         - users_auth:
             - 'write:products'
@@ -1210,7 +1216,7 @@ components:
         title:
           type: string
           example: Producto Molongo
-        bid:
+        bid_date:
           type: string
           format: date
         boost_date:
@@ -1279,7 +1285,7 @@ components:
         title:
           type: string
           example: Producto Molongo
-        bid:
+        bid_date:
           type: string
           format: date
         main_img:
