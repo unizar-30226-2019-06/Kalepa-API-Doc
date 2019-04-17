@@ -399,6 +399,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bid'
 
+  '/products/{id}':
+    get:
+      tags:
+        - product
+      summary: Get list of products of user
+      operationId: getProducts_byId
+      responses:
+        '400':
+            description: Some error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductLite'
+
   /products:
     get:
       tags:
