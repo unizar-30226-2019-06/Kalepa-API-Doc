@@ -599,9 +599,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
         default:
           description: successful operation
           content:
