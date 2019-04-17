@@ -1497,6 +1497,52 @@
           }
         }
       }
+    },
+    "/report": {
+      "post": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Create new report",
+        "operationId": "new_report",
+        "responses": {
+          "200": {
+            "description": "unsuccessful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "product_id": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Echo payload",
+          "required": true
+        }
+      }
     }
   },
   "externalDocs": {
