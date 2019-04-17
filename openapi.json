@@ -954,11 +954,6 @@
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
                 }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
               }
             }
           },
