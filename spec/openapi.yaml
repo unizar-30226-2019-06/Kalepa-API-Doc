@@ -475,7 +475,7 @@ paths:
                 bid_until:
                   type: string
                   format: date
-                  example: "1999-13-24 23:45:10"
+                  example: "1999-12-24 23:45:10"
         description: Ban parameters
         required: true
       responses:
@@ -585,7 +585,7 @@ paths:
                 ban_until:
                   type: string
                   format: date
-                  example: "1999-13-24 23:45:10"
+                  example: "1999-12-24 23:45:10"
         description: Ban parameters
         required: true
       responses:
@@ -902,7 +902,7 @@ paths:
                 ban_until:
                   type: string
                   format: date
-                  example: "1999-13-24 23:45:10"
+                  example: "1999-12-24 23:45:10"
         description: Updated full user object
         required: true
 
@@ -1204,11 +1204,11 @@ components:
         bid_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         boost_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         visits:
           type: integer
           format: int32
@@ -1278,11 +1278,11 @@ components:
         bid_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         boost_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         followers:
           type: integer
           format: int32
@@ -1306,7 +1306,7 @@ components:
         bid_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         title:
           type: string
           example: "Gafas de Sol Chulas"
@@ -1350,7 +1350,7 @@ components:
         bid_date:
           type: string
           format: date
-          example: "1999-13-24 23:45:10"
+          example: "1999-12-24 23:45:10"
         main_img:
           type: string
           example: 'http://images.com/123af3'
