@@ -410,7 +410,7 @@ paths:
           description: The id of theproduct
           required: true
           schema:
-            type: string
+            type: integer
         - name: user
           in: query
           description: The id of the user
@@ -450,6 +450,13 @@ paths:
         - product
       summary: Get list of products of user
       operationId: getProducts_byId
+      parameters:
+        - name: id
+          in: path
+          description: The id of theproduct
+          required: true
+          schema:
+            type: integer
       responses:
         '400':
             description: Some error
