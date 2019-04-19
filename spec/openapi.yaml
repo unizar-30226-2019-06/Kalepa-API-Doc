@@ -399,6 +399,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bid'
 
+    post:
+      tags:
+        - bid
+      summary: Post a new bid to a bid
+      operationId: postBid
+      parameters:
+        - name: id
+          in: path
+          description: The id of theproduct
+          required: true
+          schema:
+            type: string
+        - name: user
+          in: query
+          description: The id of the user
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                bid:
+                  type: number
+                  example: "9.99"
+        description: Price
+        required: true
+      responses:
+        '400':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+          - 'loged:user'
+
   '/products/{id}':
     get:
       tags:
