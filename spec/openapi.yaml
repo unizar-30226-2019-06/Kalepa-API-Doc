@@ -617,7 +617,7 @@ paths:
     post:
       tags:
         - product
-      summary: Logged user follow id product
+      summary: Logged user unfollow id product
       operationId: unFollowProductId
       parameters:
         - name: id
