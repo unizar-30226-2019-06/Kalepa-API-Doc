@@ -549,7 +549,7 @@
     "/bids": {
       "get": {
         "tags": [
-          "product"
+          "bid"
         ],
         "summary": "Get bids of products",
         "operationId": "getBids",
@@ -595,7 +595,7 @@
     "/bid/{id}": {
       "get": {
         "tags": [
-          "product"
+          "bid"
         ],
         "summary": "Get bids of product id",
         "operationId": "getBidbyId",
@@ -632,6 +632,130 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Bid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "bid"
+        ],
+        "summary": "Post a new bid to a bid",
+        "operationId": "postBid",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of theproduct",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "The id of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "bid": {
+                    "type": "number",
+                    "example": "9.99"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Price",
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Some error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get list of products of user",
+        "operationId": "getProducts_byId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of theproduct",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Some error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "length": {
+                      "type": "integer"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProductLite"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -688,7 +812,7 @@
     "/product/{id}/bidup": {
       "put": {
         "tags": [
-          "product"
+          "bid"
         ],
         "summary": "Put on bid product",
         "operationId": "bidProduct",
@@ -710,7 +834,8 @@
                 "properties": {
                   "bid_until": {
                     "type": "string",
-                    "format": "date"
+                    "format": "date",
+                    "example": "1999-12-24 23:45:10"
                   }
                 }
               }
@@ -753,7 +878,7 @@
     "/product/{id}/biddown": {
       "put": {
         "tags": [
-          "product"
+          "bid"
         ],
         "summary": "Put on bid product",
         "operationId": "unbidProduct",
@@ -857,6 +982,64 @@
         ]
       }
     },
+    "/product/{id}/unfollow": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Logged user follow id product",
+        "operationId": "unFollowProductId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "The id of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Some error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user"
+            ]
+          }
+        ]
+      }
+    },
     "/product/{id}/ban": {
       "put": {
         "tags": [
@@ -883,10 +1066,6 @@
                   "ban_reason": {
                     "type": "string",
                     "example": "Ban for scam"
-                  },
-                  "ban_until": {
-                    "type": "string",
-                    "format": "date"
                   }
                 }
               }
@@ -1395,7 +1574,8 @@
                   },
                   "ban_until": {
                     "type": "string",
-                    "format": "date"
+                    "format": "date",
+                    "example": "1999-12-24 23:45:10"
                   }
                 }
               }
@@ -1819,11 +1999,13 @@
           },
           "bid_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
           "boost_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
           "visits": {
             "type": "integer",
@@ -1913,11 +2095,13 @@
           },
           "bid_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
           "boost_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
           "followers": {
             "type": "integer",
@@ -1945,15 +2129,16 @@
             "type": "integer",
             "format": "int64"
           },
-          "bid_until": {
+          "bid_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
-          "product_title": {
+          "title": {
             "type": "string",
             "example": "Gafas de Sol Chulas"
           },
-          "product_img": {
+          "main_img": {
             "type": "string",
             "example": "http://images.com/134135613613"
           },
@@ -2003,7 +2188,8 @@
           },
           "bid_date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
           },
           "main_img": {
             "type": "string",
