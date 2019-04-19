@@ -814,7 +814,7 @@
         "tags": [
           "bid"
         ],
-        "summary": "Put on bid product",
+        "summary": "Set bid on, on a product",
         "operationId": "bidProduct",
         "parameters": [
           {
@@ -880,7 +880,7 @@
         "tags": [
           "bid"
         ],
-        "summary": "Put on bid product",
+        "summary": "Set bid off on product",
         "operationId": "unbidProduct",
         "parameters": [
           {
