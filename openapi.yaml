@@ -1051,6 +1051,242 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
+  /trade:
+    post:
+      tags:
+        - trades
+      summary: Create a new trade
+      operationId: new_trade
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                seller_id:
+                  type: integer
+                  format: int64
+                buyer_id:
+                  type: integer
+                  format: int64
+                product_id:
+                  type: integer
+                  format: int64
+        description: The new trade info
+        required: true
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation (id on message)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+  '/trade/{id}':
+    get:
+      tags:
+        - trades
+      summary: Get trade info
+      operationId: get_trade
+      parameters:
+        - name: id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+      security:
+        - users_auth:
+            - 'loged:user'
+  '/trade/{id}/close':
+    put:
+      tags:
+        - trades
+      summary: Close a trade for loged user
+      operationId: close_trade
+      parameters:
+        - name: user_id
+          in: query
+          description: user id (seller or buyer)
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+  /trades:
+    get:
+      tags:
+        - trades
+      summary: List trades of current user
+      operationId: list_trades
+      parameters:
+        - name: user_id
+          in: query
+          description: user id (seller or buyer)
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Trade'
+      security:
+        - users_auth:
+            - 'loged:user'
+  '/trade/{id}/offer':
+    post:
+      tags:
+        - trades
+      summary: Close a trade for loged user
+      operationId: offer_trade
+      parameters:
+        - name: user_id
+          in: query
+          description: user id (seller or buyer)
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                price:
+                  type: number
+                  example: 9.99
+                products:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+        description: The products and price to offer
+        required: true
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+    put:
+      tags:
+        - trades
+      summary: Close a trade for loged user
+      operationId: edit_offer
+      parameters:
+        - name: user_id
+          in: query
+          description: user id (seller or buyer)
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                price:
+                  type: number
+                  example: 9.99
+                products:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+        description: The products to delete
+        required: true
+      responses:
+        '200':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
   /report:
     post:
       tags:
@@ -1077,7 +1313,7 @@ paths:
               properties:
                 product_id:
                   type: integer
-        description: Echo payload
+        description: Request info
         required: true
 externalDocs:
   description: Find out more about Swagger
@@ -1401,6 +1637,32 @@ components:
         max_bid_user:
           type: integer
           format: int64
+    Trade:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        product_title:
+          type: string
+        seller_id:
+          type: integer
+          format: int64
+        buyer_id:
+          type: integer
+          format: int64
+        closed:
+          type: boolean
+        price:
+          type: number
+          example: 9.99
+        last_edit:
+          type: string
+          format: date
+          example: '1999-12-24 23:45:10'
     NewProduct:
       type: object
       required:
