@@ -1192,7 +1192,7 @@ paths:
     post:
       tags:
         - trades
-      summary: Close a trade for loged user
+      summary: Make an offer for a trade
       operationId: offer_trade
       parameters:
         - name: user_id
@@ -1242,7 +1242,7 @@ paths:
     put:
       tags:
         - trades
-      summary: Close a trade for loged user
+      summary: Edit a offer for a trade
       operationId: edit_offer
       parameters:
         - name: user_id
