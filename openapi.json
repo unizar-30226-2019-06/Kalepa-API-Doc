@@ -1640,7 +1640,7 @@
         "summary": "Get the list of users",
         "operationId": "listUsers",
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -1710,7 +1710,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -1759,7 +1759,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -1817,7 +1817,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -1866,7 +1866,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -1888,7 +1888,7 @@
                     "list": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Trade"
+                        "$ref": "#/components/schemas/TradeInfo"
                       }
                     }
                   }
@@ -1911,7 +1911,7 @@
         "tags": [
           "trades"
         ],
-        "summary": "Close a trade for loged user",
+        "summary": "Offer products and money on the trade",
         "operationId": "offer_trade",
         "parameters": [
           {
@@ -1990,7 +1990,7 @@
         "tags": [
           "trades"
         ],
-        "summary": "Close a trade for loged user",
+        "summary": "Edit the offer",
         "operationId": "edit_offer",
         "parameters": [
           {
@@ -2036,7 +2036,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -2074,7 +2074,7 @@
         "summary": "Create new report",
         "operationId": "new_report",
         "responses": {
-          "200": {
+          "400": {
             "description": "unsuccessful operation",
             "content": {
               "application/json": {
@@ -2540,6 +2540,42 @@
           }
         }
       },
+      "TradeInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product_title": {
+            "type": "string"
+          },
+          "seller_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "buyer_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "price": {
+            "type": "number",
+            "example": 9.99
+          },
+          "last_edit": {
+            "type": "string",
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
+          }
+        }
+      },
       "Trade": {
         "type": "object",
         "properties": {
@@ -2573,6 +2609,13 @@
             "type": "string",
             "format": "date",
             "example": "1999-12-24 23:45:10"
+          },
+          "products_offer": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       },
