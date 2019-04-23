@@ -1289,6 +1289,88 @@ paths:
         - users_auth:
             - 'loged:user'
 
+  /search/products:
+    get:
+      tags:
+        - searchs
+      summary: Search products
+      operationId: search_product
+      parameters:
+        - name: text
+          in: query
+          description: text for product
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        title:
+                          type: String
+                          example: "Gafas de sol" 
+                  
+  /search/users:
+    get:
+      tags:
+        - searchs
+      summary: Search products
+      operationId: search_users
+      parameters:
+        - name: text
+          in: query
+          description: text for user
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        title:
+                          type: String
+                          example: "Pepito" 
+
+
+      
 
   /report:
     post:
