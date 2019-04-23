@@ -195,24 +195,6 @@ paths:
         - users_auth:
             - 'write:products'
   
-  /store/inventory:
-    get:
-      tags:
-        - store
-      summary: Returns product inventories by boost and location if exist on request
-      description: Returns a map of status codes to quantities
-      operationId: getInventory
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-      security:
-        - api_key: []
   /user:
     post:
       tags:
@@ -240,15 +222,8 @@ paths:
     get:
       tags:
         - user
-      summary: Get Product info
-      operationId: getProduct
-      parameters:
-        - name: id
-          in: query
-          description: The name that needs to be fetched. Use user1 for testing.
-          required: true
-          schema:
-            type: string
+      summary: Get logged user info
+      operationId: getLoggedUser
       responses:
         '400':
           description: Some error
@@ -274,16 +249,9 @@ paths:
     put:
       tags:
         - user
-      summary: Updated product
+      summary: Update logged user
       description: This can only be done by the logged in user.
-      operationId: updateProduct
-      parameters:
-        - name: id
-          in: query
-          description: id that need to be updated
-          required: true
-          schema:
-            type: string
+      operationId: updateLoggedUser
       responses:
         default:
           description: successful operation
@@ -307,16 +275,9 @@ paths:
     delete:
       tags:
         - user
-      summary: Delete product
+      summary: Delete logged user
       description: This can only be done by the logged in user.
-      operationId: deleteProduct
-      parameters:
-        - name: id
-          in: query
-          description: The id that needs to be deleted
-          required: true
-          schema:
-            type: string
+      operationId: deleteLoggedUser
       responses:
         '400':
           description: Some error
@@ -411,12 +372,6 @@ paths:
           required: true
           schema:
             type: integer
-        - name: user
-          in: query
-          description: The id of the user
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -590,12 +545,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: user_id
-          in: query
-          description: The id of the user
-          required: true
-          schema:
-            type: string
       responses:
         '400':
             description: Some error
@@ -623,12 +572,6 @@ paths:
         - name: id
           in: path
           description: The id of the product
-          required: true
-          schema:
-            type: string
-        - name: user_id
-          in: query
-          description: The id of the user
           required: true
           schema:
             type: string
@@ -697,13 +640,6 @@ paths:
       summary: Get logged user follow products
       description: This can only be done by the logged in user.
       operationId: userFollowsList
-      parameters:
-        - name: id
-          in: query
-          description: The id of the user
-          required: true
-          schema:
-            type: string
       responses:
         '400':
           description: Some error
@@ -1123,12 +1059,6 @@ paths:
       summary: Close a trade for loged user
       operationId: close_trade
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
@@ -1158,13 +1088,6 @@ paths:
        - trades
       summary: List trades of current user
       operationId: list_trades
-      parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
       responses:
         '400':
           description: unsuccessful operation
@@ -1195,12 +1118,6 @@ paths:
       summary: Offer products and money on the trade
       operationId: offer_trade
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
@@ -1245,12 +1162,6 @@ paths:
       summary: Edit the offer
       operationId: edit_offer
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
