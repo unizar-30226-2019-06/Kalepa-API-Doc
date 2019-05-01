@@ -1994,7 +1994,7 @@
         "tags": [
           "searchs"
         ],
-        "summary": "Search products",
+        "summary": "Search users",
         "operationId": "search_users",
         "parameters": [
           {
@@ -2036,7 +2036,7 @@
                             "type": "integer",
                             "format": "int64"
                           },
-                          "title": {
+                          "nick": {
                             "type": "string",
                             "example": "Pepito"
                           }
