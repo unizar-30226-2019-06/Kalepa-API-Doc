@@ -1237,7 +1237,7 @@ paths:
                           type: integer
                           format: int64
                         title:
-                          type: String
+                          type: string
                           example: "Gafas de sol" 
                   
   /search/users:
@@ -1277,7 +1277,7 @@ paths:
                           type: integer
                           format: int64
                         title:
-                          type: String
+                          type: string
                           example: "Pepito" 
 
 
