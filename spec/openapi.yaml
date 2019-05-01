@@ -1244,7 +1244,7 @@ paths:
     get:
       tags:
         - searchs
-      summary: Search products
+      summary: Search users
       operationId: search_users
       parameters:
         - name: text
@@ -1276,7 +1276,7 @@ paths:
                         id:
                           type: integer
                           format: int64
-                        title:
+                        nick:
                           type: string
                           example: "Pepito" 
 
