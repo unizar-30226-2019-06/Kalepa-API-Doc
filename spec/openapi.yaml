@@ -1353,7 +1353,7 @@ paths:
                           description: "The body of the comment "
                           example: "Dat Seller is the best/ Dat Buyer is the best"
       
-'/msgs/{trade_id}':
+  '/msgs/{trade_id}':
     post:
       tags:
         - messages
