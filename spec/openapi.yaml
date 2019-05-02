@@ -1350,7 +1350,7 @@ paths:
                           example: "Pepito"
                         body:
                           type: string
-                          description: "The body of the comment"
+                          description: "The body of the comment "
                           example: "Dat Seller is the best/ Dat Buyer is the best"
       
 '/msgs/{trade_id}':
