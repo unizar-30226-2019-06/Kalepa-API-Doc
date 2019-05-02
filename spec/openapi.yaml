@@ -1280,8 +1280,109 @@ paths:
                           type: string
                           example: "Pepito" 
 
+  '/comment/{user_id}':
+    post:
+      tags:
+        - comments
+      summary: Create a new comentary
+      description: "Se supone que esto solo se puede hacer tras comprar algo"
+      operationId: new_comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                body:
+                  type: string
+                  description: "The body of the comment"
+                  example: "Dat Seller is the best/ Dat Buyer is the best"
+                points:
+                  type: integer
+                  description: "From 0 to 5"
+                  example: "3"
+        description: Request info
+        required: true
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
 
+  '/comments/{user_id}':
+    get:
+      tags:
+        - comments
+      summary: Get user comentaries
+      operationId: get_comments
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user:
+                          type: string
+                          example: "Pepito"
+                        body:
+                          type: string
+                          description: "The body of the comment"
+                          example: "Dat Seller is the best/ Dat Buyer is the best"
       
+'/msgs/{trade_id}':
+    post:
+      tags:
+        - messages
+      summary: Create new msg
+      operationId: new_msg
+      parameters:
+        - name: text
+          in: query
+          description: text of the msg
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
 
   /report:
     post:
@@ -1311,6 +1412,56 @@ paths:
                   type: integer
         description: Request info
         required: true
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  /reports:
+    get:
+      tags:
+        - reports
+      summary: Get report list
+      operationId: list_report
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        user:
+                          type: integer
+                          format: int64
+                        product:
+                          type: integer
+                          format: int64 
+                        reason:
+                          type: string
+                          example: "Porque si"
+                        date:
+                          type: string
+                          format: date
+
+      security:
+        - users_auth:
+            - 'loged:user'
+            - 'moder:user'
 
 
 externalDocs:
