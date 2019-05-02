@@ -1287,6 +1287,13 @@ paths:
       summary: Create a new comentary
       description: "Se supone que esto solo se puede hacer tras comprar algo"
       operationId: new_comment
+      parameters:
+        - name: user_id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
@@ -1325,6 +1332,13 @@ paths:
         - comments
       summary: Get user comentaries
       operationId: get_comments
+      parameters:
+        - name: user_id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: integer
       responses:
         '400':
           description: unsuccessful operation
@@ -1366,6 +1380,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: trade_id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
       responses:
         '400':
           description: unsuccessful operation
