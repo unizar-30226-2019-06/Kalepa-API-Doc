@@ -2242,6 +2242,79 @@
             ]
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "Get msgs",
+        "operationId": "get_msgs",
+        "parameters": [
+          {
+            "name": "trade_id",
+            "in": "path",
+            "description": "trade id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "unsuccessful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "length": {
+                      "type": "integer"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nick": {
+                            "type": "string",
+                            "example": "Pepito"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "1999-12-24 23:45:10"
+                          },
+                          "body": {
+                            "type": "string",
+                            "description": "The body of the comment ",
+                            "example": "Dat Seller is the best/ Dat Buyer is the best"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user"
+            ]
+          }
+        ]
       }
     },
     "/report": {
