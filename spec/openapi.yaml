@@ -1587,6 +1587,13 @@ paths:
         - Notifications
       summary: delete notification
       operationId: delete_notification
+      parameters:
+        - name: id
+          in: path
+          description: notification id
+          required: true
+          schema:
+            type: integer
       responses:
         '400':
           description: unsuccessful operation
