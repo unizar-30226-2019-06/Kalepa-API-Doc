@@ -1605,12 +1605,34 @@ paths:
       security:
         - users_auth:
             - 'loged:user'
+      
+    delete:
+      tags:
+        - Notifications
+      summary: delete all notifications for current user
+      operationId: delete_notifications
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user
 
   '/notification/{id}':
     delete:
       tags:
         - Notifications
-      summary: delete notification
+      summary: delete a notification for current user
       operationId: delete_notification
       parameters:
         - name: id
