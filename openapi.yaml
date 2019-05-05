@@ -1588,7 +1588,7 @@ paths:
                   list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ApiResponse'
+                      $ref: '#/components/schemas/Notification'
       security:
         - users_auth:
             - 'loged:user'

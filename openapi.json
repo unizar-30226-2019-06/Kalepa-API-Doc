@@ -2545,7 +2545,7 @@
                     "list": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ApiResponse"
+                        "$ref": "#/components/schemas/Notification"
                       }
                     }
                   }
