@@ -2488,12 +2488,12 @@
                   "product_id": {
                     "type": "integer",
                     "format": "int64",
-                    "description": "can be null"
+                    "description": "can be null (writting 0)"
                   },
                   "category": {
                     "type": "string",
                     "example": "Gafas",
-                    "description": "can be null"
+                    "description": "can be null (writting null)"
                   },
                   "text": {
                     "type": "string",
