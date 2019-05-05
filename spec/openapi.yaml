@@ -70,7 +70,7 @@ paths:
   /product:
     post:
       tags:
-        - product
+        - Product
       summary: Add a new product to the store
       operationId: addproduct
       responses:
@@ -102,7 +102,7 @@ paths:
   '/product/{id}':
     get:
       tags:
-        - product
+        - Product
       summary: Find product by ID
       description: Returns a single product
       operationId: getproductById
@@ -133,7 +133,7 @@ paths:
 
     put:
       tags:
-        - product
+        - Product
       summary: Updates a product in the store with form data
       description: User must be logged and the owner of the product
       operationId: updateproductWithForm
@@ -166,7 +166,7 @@ paths:
         required: true
     delete:
       tags:
-        - product
+        - Product
       summary: Deletes a product
       description: User must be logged and the owner of the product
       operationId: deleteproduct
@@ -198,7 +198,7 @@ paths:
   /user:
     post:
       tags:
-        - user
+        - User
       summary: Create new user
       description: This can be used wihtout login
       operationId: createUser
@@ -221,7 +221,7 @@ paths:
         required: true
     get:
       tags:
-        - user
+        - User
       summary: Get logged user info
       operationId: getLoggedUser
       responses:
@@ -248,7 +248,7 @@ paths:
             - 'loged:user'
     put:
       tags:
-        - user
+        - User
       summary: Update logged user
       description: This can only be done by the logged in user.
       operationId: updateLoggedUser
@@ -304,7 +304,7 @@ paths:
   /bids:
     get:
       tags:
-        - bid
+        - Bid
       summary: Get bids of products
       operationId: getBids
       responses:
@@ -333,7 +333,7 @@ paths:
   '/bid/{id}':
     get:
       tags:
-        - bid
+        - Bid
       summary: Get bids of product id
       operationId: getBidbyId
       parameters:
@@ -362,8 +362,8 @@ paths:
 
     post:
       tags:
-        - bid
-      summary: Post a new bid to a bid
+        - Bid
+      summary: Bid on a bid
       operationId: postBid
       parameters:
         - name: id
@@ -402,7 +402,7 @@ paths:
   '/products/{id}':
     get:
       tags:
-        - product
+        - Product
       summary: Get list of products of user
       operationId: getProducts_byId
       parameters:
@@ -435,7 +435,7 @@ paths:
   /products:
     get:
       tags:
-        - product
+        - Product
       summary: Get list of products
       operationId: getProducts
       responses:
@@ -464,7 +464,7 @@ paths:
   '/product/{id}/bidup':
     put:
       tags:
-        - bid
+        - Bid
       summary: Set bid on, on a product
       operationId: bidProduct
       parameters:
@@ -505,7 +505,7 @@ paths:
   '/product/{id}/biddown':
     put:
       tags:
-        - bid
+        - Bid
       summary: Set bid off on product
       operationId: unbidProduct
       parameters:
@@ -535,7 +535,7 @@ paths:
   '/product/{id}/follow':
     post:
       tags:
-        - product
+        - Product
       summary: Logged user follow id product
       operationId: followProductId
       parameters:
@@ -565,7 +565,7 @@ paths:
   '/product/{id}/unfollow':
     post:
       tags:
-        - product
+        - Product
       summary: Logged user unfollow id product
       operationId: unFollowProductId
       parameters:
@@ -595,7 +595,7 @@ paths:
   '/product/{id}/ban':
     put:
       tags:
-        - product
+        - Product
       summary: Ban product
       operationId: banProduct
       parameters:
@@ -636,7 +636,7 @@ paths:
   /user/follows:
     get:
       tags:
-        - user
+        - User
       summary: Get logged user follow products
       description: This can only be done by the logged in user.
       operationId: userFollowsList
@@ -706,7 +706,7 @@ paths:
   /login:
     post:
       tags:
-        - user
+        - User
       summary: Logs user into the system
       operationId: loginUser
       responses:
@@ -737,7 +737,7 @@ paths:
   /logout:
     get:
       tags:
-        - user
+        - User
       summary: Logs out current logged in user session
       operationId: logoutUser
       responses:
@@ -756,7 +756,7 @@ paths:
   '/profile/{nick}':
     get:
       tags:
-        - user
+        - User
       summary: Get user info by user nick
       operationId: getUserByNick
       parameters:
@@ -788,7 +788,7 @@ paths:
   '/user/{id}':
     get:
       tags:
-        - user
+        - User
       summary: Get user info by user id
       description: This can only be done by the logged mod user.
       operationId: getUserById
@@ -824,7 +824,7 @@ paths:
             - 'moder:user'
     put:
       tags:
-        - user
+        - User
       summary: Updated user
       description: This can only be done by the logged mod user.
       operationId: updateUserById
@@ -858,7 +858,7 @@ paths:
         required: true
     delete:
       tags:
-        - user
+        - User
       summary: Delete user
       description: This can only be done by the logged mod user.
       operationId: deleteUserById
@@ -886,7 +886,7 @@ paths:
   '/user/{id}/ban':
     put:
       tags:
-        - user
+        - User
       summary: Ban user
       description: This can only be done by the logged mod user.
       operationId: banUser
@@ -929,7 +929,7 @@ paths:
   '/user/{id}/mod':
     put:
       tags:
-        - user
+        - User
       summary: Make mod a user
       description: This can only be done by the logged mod user.
       operationId: modUser
@@ -957,7 +957,7 @@ paths:
   /users:
     get:
       tags:
-        - user
+        - User
       summary: Get the list of users
       operationId: listUsers
       responses:
@@ -986,7 +986,7 @@ paths:
   /trade:
     post:
       tags:
-        - trades
+        - Trades
       summary: Create a new trade
       operationId: new_trade
       requestBody:
@@ -1025,7 +1025,7 @@ paths:
   '/trade/{id}':  
     get:
       tags:
-        - trades
+        - Trades
       summary: Get trade info
       operationId: get_trade
       parameters:
@@ -1055,7 +1055,7 @@ paths:
   '/trade/{id}/close':  
     put:
       tags:
-        - trades
+        - Trades
       summary: Close a trade for loged user
       operationId: close_trade
       parameters:
@@ -1085,7 +1085,7 @@ paths:
   /trades:
     get:
       tags:
-       - trades
+       - Trades
       summary: List trades of current user
       operationId: list_trades
       responses:
@@ -1114,7 +1114,7 @@ paths:
   '/trade/{id}/offer':  
     post:
       tags:
-        - trades
+        - Trades
       summary: Offer products and money on the trade
       operationId: offer_trade
       parameters:
@@ -1158,7 +1158,7 @@ paths:
 
     put:
       tags:
-        - trades
+        - Trades
       summary: Edit the offer
       operationId: edit_offer
       parameters:
@@ -1203,7 +1203,7 @@ paths:
   /search/products:
     get:
       tags:
-        - searchs
+        - Searchs
       summary: Search products
       operationId: search_product
       parameters:
@@ -1243,7 +1243,7 @@ paths:
   /search/users:
     get:
       tags:
-        - searchs
+        - Searchs
       summary: Search users
       operationId: search_users
       parameters:
@@ -1283,7 +1283,7 @@ paths:
   '/comment/{user_id}':
     post:
       tags:
-        - comments
+        - Comments
       summary: Create a new comentary
       description: "Se supone que esto solo se puede hacer tras comprar algo"
       operationId: new_comment
@@ -1329,7 +1329,7 @@ paths:
   '/comments/{user_id}':
     get:
       tags:
-        - comments
+        - Comments
       summary: Get user comentaries
       operationId: get_comments
       parameters:
@@ -1370,7 +1370,7 @@ paths:
   '/msgs/{trade_id}':
     post:
       tags:
-        - messages
+        - Messages
       summary: Create new msg
       operationId: new_msg
       parameters:
@@ -1408,7 +1408,7 @@ paths:
 
     get:
       tags:
-        - messages
+        - Messages
       summary: Get msgs
       operationId: get_msgs
       parameters:
@@ -1457,7 +1457,7 @@ paths:
   /report:
     post:
       tags:
-        - reports
+        - Reports
       summary: Create new report
       operationId: new_report
       responses:
@@ -1489,7 +1489,7 @@ paths:
   /reports:
     get:
       tags:
-        - reports
+        - Reports
       summary: Get report list
       operationId: list_report
       responses:
