@@ -1601,7 +1601,7 @@ paths:
                   list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Notifications'
+                      $ref: '#/components/schemas/Notification'
       security:
         - users_auth:
             - 'loged:user'
