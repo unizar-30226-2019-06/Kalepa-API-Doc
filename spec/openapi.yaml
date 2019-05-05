@@ -1626,7 +1626,7 @@ paths:
                 $ref: '#/components/schemas/ApiResponse'
       security:
         - users_auth:
-            - 'loged:user
+            - 'loged:user'
 
   '/notification/{id}':
     delete:
