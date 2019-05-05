@@ -1545,10 +1545,10 @@ paths:
           application/json:
             schema:
               properties:
-                user:
+                user_id:
                   type: integer
                   format: int64
-                product:
+                product_id:
                   type: integer
                   format: int64
                   description: can be null
@@ -2075,10 +2075,10 @@ components:
         id:
           type: integer
           format: int64
-        user:
+        user_id:
           type: integer
           format: int64
-        product:
+        product_id:
           type: integer
           format: int64
         category:
