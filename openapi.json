@@ -19,7 +19,7 @@
       "description": "Example echo operations"
     },
     {
-      "name": "user",
+      "name": "User",
       "description": "Everything about an user",
       "externalDocs": {
         "description": "Find out more (WIP)",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "name": "product",
+      "name": "Product",
       "description": "Products in sell by an user"
     }
   ],
@@ -437,7 +437,7 @@
       },
       "delete": {
         "tags": [
-          "user"
+          "User"
         ],
         "summary": "Delete logged user",
         "description": "This can only be done by the logged in user.",
