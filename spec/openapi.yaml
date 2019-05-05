@@ -14,12 +14,12 @@ info:
 tags:
   - name: Echo
     description: Example echo operations
-  - name: user
+  - name: User
     description: Everything about an user
     externalDocs:
       description: Find out more (WIP)
       url: 'http://kalepa-api.herokuapp.com'
-  - name: product
+  - name: Product
     description: Products in sell by an user
 
 paths:
@@ -274,7 +274,7 @@ paths:
         required: true
     delete:
       tags:
-        - user
+        - User
       summary: Delete logged user
       description: This can only be done by the logged in user.
       operationId: deleteLoggedUser
