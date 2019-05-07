@@ -1298,7 +1298,7 @@ paths:
                 body:
                   type: string
                   description: The body of the comment
-                  example: Dat Seller is the best/ Dat Buyer is the best
+                  example: Dat Seller is the best / Dat Buyer is the best
                 points:
                   type: integer
                   description: From 0 to 5
