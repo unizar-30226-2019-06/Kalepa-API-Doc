@@ -14,12 +14,12 @@ info:
 tags:
   - name: Echo
     description: Example echo operations
-  - name: user
+  - name: User
     description: Everything about an user
     externalDocs:
       description: Find out more (WIP)
       url: 'http://kalepa-api.herokuapp.com'
-  - name: product
+  - name: Product
     description: Products in sell by an user
 
 paths:
@@ -70,7 +70,7 @@ paths:
   /product:
     post:
       tags:
-        - product
+        - Product
       summary: Add a new product to the store
       operationId: addproduct
       responses:
@@ -102,7 +102,7 @@ paths:
   '/product/{id}':
     get:
       tags:
-        - product
+        - Product
       summary: Find product by ID
       description: Returns a single product
       operationId: getproductById
@@ -133,7 +133,7 @@ paths:
 
     put:
       tags:
-        - product
+        - Product
       summary: Updates a product in the store with form data
       description: User must be logged and the owner of the product
       operationId: updateproductWithForm
@@ -166,7 +166,7 @@ paths:
         required: true
     delete:
       tags:
-        - product
+        - Product
       summary: Deletes a product
       description: User must be logged and the owner of the product
       operationId: deleteproduct
@@ -195,28 +195,10 @@ paths:
         - users_auth:
             - 'write:products'
   
-  /store/inventory:
-    get:
-      tags:
-        - store
-      summary: Returns product inventories by boost and location if exist on request
-      description: Returns a map of status codes to quantities
-      operationId: getInventory
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
-      security:
-        - api_key: []
   /user:
     post:
       tags:
-        - user
+        - User
       summary: Create new user
       description: This can be used wihtout login
       operationId: createUser
@@ -239,16 +221,9 @@ paths:
         required: true
     get:
       tags:
-        - user
-      summary: Get Product info
-      operationId: getProduct
-      parameters:
-        - name: id
-          in: query
-          description: The name that needs to be fetched. Use user1 for testing.
-          required: true
-          schema:
-            type: string
+        - User
+      summary: Get logged user info
+      operationId: getLoggedUser
       responses:
         '400':
           description: Some error
@@ -273,17 +248,10 @@ paths:
             - 'loged:user'
     put:
       tags:
-        - user
-      summary: Updated product
+        - User
+      summary: Update logged user
       description: This can only be done by the logged in user.
-      operationId: updateProduct
-      parameters:
-        - name: id
-          in: query
-          description: id that need to be updated
-          required: true
-          schema:
-            type: string
+      operationId: updateLoggedUser
       responses:
         default:
           description: successful operation
@@ -306,17 +274,10 @@ paths:
         required: true
     delete:
       tags:
-        - user
-      summary: Delete product
+        - User
+      summary: Delete logged user
       description: This can only be done by the logged in user.
-      operationId: deleteProduct
-      parameters:
-        - name: id
-          in: query
-          description: The id that needs to be deleted
-          required: true
-          schema:
-            type: string
+      operationId: deleteLoggedUser
       responses:
         '400':
           description: Some error
@@ -343,7 +304,7 @@ paths:
   /bids:
     get:
       tags:
-        - bid
+        - Bid
       summary: Get bids of products
       operationId: getBids
       responses:
@@ -372,7 +333,7 @@ paths:
   '/bid/{id}':
     get:
       tags:
-        - bid
+        - Bid
       summary: Get bids of product id
       operationId: getBidbyId
       parameters:
@@ -401,8 +362,8 @@ paths:
 
     post:
       tags:
-        - bid
-      summary: Post a new bid to a bid
+        - Bid
+      summary: Bid on a bid
       operationId: postBid
       parameters:
         - name: id
@@ -411,12 +372,6 @@ paths:
           required: true
           schema:
             type: integer
-        - name: user
-          in: query
-          description: The id of the user
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -447,7 +402,7 @@ paths:
   '/products/{id}':
     get:
       tags:
-        - product
+        - Product
       summary: Get list of products of user
       operationId: getProducts_byId
       parameters:
@@ -480,7 +435,7 @@ paths:
   /products:
     get:
       tags:
-        - product
+        - Product
       summary: Get list of products
       operationId: getProducts
       responses:
@@ -509,7 +464,7 @@ paths:
   '/product/{id}/bidup':
     put:
       tags:
-        - bid
+        - Bid
       summary: Set bid on, on a product
       operationId: bidProduct
       parameters:
@@ -550,7 +505,7 @@ paths:
   '/product/{id}/biddown':
     put:
       tags:
-        - bid
+        - Bid
       summary: Set bid off on product
       operationId: unbidProduct
       parameters:
@@ -580,19 +535,13 @@ paths:
   '/product/{id}/follow':
     post:
       tags:
-        - product
+        - Product
       summary: Logged user follow id product
       operationId: followProductId
       parameters:
         - name: id
           in: path
           description: The id of the product
-          required: true
-          schema:
-            type: string
-        - name: user_id
-          in: query
-          description: The id of the user
           required: true
           schema:
             type: string
@@ -616,19 +565,13 @@ paths:
   '/product/{id}/unfollow':
     post:
       tags:
-        - product
+        - Product
       summary: Logged user unfollow id product
       operationId: unFollowProductId
       parameters:
         - name: id
           in: path
           description: The id of the product
-          required: true
-          schema:
-            type: string
-        - name: user_id
-          in: query
-          description: The id of the user
           required: true
           schema:
             type: string
@@ -652,7 +595,7 @@ paths:
   '/product/{id}/ban':
     put:
       tags:
-        - product
+        - Product
       summary: Ban product
       operationId: banProduct
       parameters:
@@ -693,17 +636,10 @@ paths:
   /user/follows:
     get:
       tags:
-        - user
+        - User
       summary: Get logged user follow products
       description: This can only be done by the logged in user.
       operationId: userFollowsList
-      parameters:
-        - name: id
-          in: query
-          description: The id of the user
-          required: true
-          schema:
-            type: string
       responses:
         '400':
           description: Some error
@@ -770,7 +706,7 @@ paths:
   /login:
     post:
       tags:
-        - user
+        - User
       summary: Logs user into the system
       operationId: loginUser
       responses:
@@ -801,7 +737,7 @@ paths:
   /logout:
     get:
       tags:
-        - user
+        - User
       summary: Logs out current logged in user session
       operationId: logoutUser
       responses:
@@ -820,7 +756,7 @@ paths:
   '/profile/{nick}':
     get:
       tags:
-        - user
+        - User
       summary: Get user info by user nick
       operationId: getUserByNick
       parameters:
@@ -852,7 +788,7 @@ paths:
   '/user/{id}':
     get:
       tags:
-        - user
+        - User
       summary: Get user info by user id
       description: This can only be done by the logged mod user.
       operationId: getUserById
@@ -888,7 +824,7 @@ paths:
             - 'moder:user'
     put:
       tags:
-        - user
+        - User
       summary: Updated user
       description: This can only be done by the logged mod user.
       operationId: updateUserById
@@ -922,7 +858,7 @@ paths:
         required: true
     delete:
       tags:
-        - user
+        - User
       summary: Delete user
       description: This can only be done by the logged mod user.
       operationId: deleteUserById
@@ -950,7 +886,7 @@ paths:
   '/user/{id}/ban':
     put:
       tags:
-        - user
+        - User
       summary: Ban user
       description: This can only be done by the logged mod user.
       operationId: banUser
@@ -993,7 +929,7 @@ paths:
   '/user/{id}/mod':
     put:
       tags:
-        - user
+        - User
       summary: Make mod a user
       description: This can only be done by the logged mod user.
       operationId: modUser
@@ -1021,11 +957,11 @@ paths:
   /users:
     get:
       tags:
-        - user
+        - User
       summary: Get the list of users
       operationId: listUsers
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1050,7 +986,7 @@ paths:
   /trade:
     post:
       tags:
-        - trades
+        - Trades
       summary: Create a new trade
       operationId: new_trade
       requestBody:
@@ -1070,7 +1006,7 @@ paths:
         description: The new trade info
         required: true
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1089,7 +1025,7 @@ paths:
   '/trade/{id}':  
     get:
       tags:
-        - trades
+        - Trades
       summary: Get trade info
       operationId: get_trade
       parameters:
@@ -1100,7 +1036,7 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1119,16 +1055,10 @@ paths:
   '/trade/{id}/close':  
     put:
       tags:
-        - trades
+        - Trades
       summary: Close a trade for loged user
       operationId: close_trade
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
@@ -1136,7 +1066,7 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1155,18 +1085,11 @@ paths:
   /trades:
     get:
       tags:
-       - trades
+       - Trades
       summary: List trades of current user
       operationId: list_trades
-      parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1183,7 +1106,7 @@ paths:
                   list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Trade'
+                      $ref: '#/components/schemas/TradeInfo'
       security:
         - users_auth:
             - 'loged:user'
@@ -1191,16 +1114,10 @@ paths:
   '/trade/{id}/offer':  
     post:
       tags:
-        - trades
-      summary: Make an offer for a trade
+        - Trades
+      summary: Offer products and money on the trade
       operationId: offer_trade
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
@@ -1241,16 +1158,10 @@ paths:
 
     put:
       tags:
-        - trades
-      summary: Edit a offer for a trade
+        - Trades
+      summary: Edit the offer
       operationId: edit_offer
       parameters:
-        - name: user_id
-          in: query
-          description: user id (seller or buyer)
-          required: true
-          schema:
-            type: integer
         - name: id
           in: path
           description: trade id
@@ -1273,7 +1184,7 @@ paths:
         description: The products to delete
         required: true
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1289,15 +1200,268 @@ paths:
         - users_auth:
             - 'loged:user'
 
+  /search/products:
+    get:
+      tags:
+        - Searchs
+      summary: Search products
+      operationId: search_product
+      parameters:
+        - name: text
+          in: query
+          description: text for product
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        title:
+                          type: string
+                          example: "Gafas de sol" 
+                  
+  /search/users:
+    get:
+      tags:
+        - Searchs
+      summary: Search users
+      operationId: search_users
+      parameters:
+        - name: text
+          in: query
+          description: text for user
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        nick:
+                          type: string
+                          example: "Pepito" 
+
+  '/comment/{user_id}':
+    post:
+      tags:
+        - Comments
+      summary: Create a new comentary
+      description: "Se supone que esto solo se puede hacer tras comprar algo"
+      operationId: new_comment
+      parameters:
+        - name: user_id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                body:
+                  type: string
+                  description: "The body of the comment"
+                  example: "Dat Seller is the best/ Dat Buyer is the best"
+                points:
+                  type: integer
+                  description: "From 0 to 5"
+                  example: "3"
+        description: Request info
+        required: true
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/comments/{user_id}':
+    get:
+      tags:
+        - Comments
+      summary: Get user comentaries
+      operationId: get_comments
+      parameters:
+        - name: user_id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user:
+                          type: string
+                          example: "Pepito"
+                        body:
+                          type: string
+                          description: "The body of the comment "
+                          example: "Dat Seller is the best/ Dat Buyer is the best"
+      
+  '/msgs/{trade_id}':
+    post:
+      tags:
+        - Messages
+      summary: Create new msg
+      operationId: new_msg
+      parameters:
+        - name: trade_id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                body:
+                  type: string
+                  description: "The body of the message"
+                  example: "Dat Seller is the best/ Dat Buyer is the best"
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+    get:
+      tags:
+        - Messages
+      summary: Get msgs
+      operationId: get_msgs
+      parameters:
+        - name: trade_id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        nick:
+                          type: string
+                          example: "Pepito"
+                        date:
+                          type: string
+                          format: date
+                          example: "1999-12-24 23:45:10"
+                        body:
+                          type: string
+                          description: "The body of the comment "
+                          example: "Dat Seller is the best/ Dat Buyer is the best"
+      security:
+        - users_auth:
+            - 'loged:user'
+
 
   /report:
     post:
       tags:
-        - reports
+        - Reports
       summary: Create new report
       operationId: new_report
       responses:
-        '200':
+        '400':
           description: unsuccessful operation
           content:
             application/json:
@@ -1318,6 +1482,181 @@ paths:
                   type: integer
         description: Request info
         required: true
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  /reports:
+    get:
+      tags:
+        - Reports
+      summary: Get report list
+      operationId: list_report
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        user:
+                          type: integer
+                          format: int64
+                        product:
+                          type: integer
+                          format: int64 
+                        reason:
+                          type: string
+                          example: "Porque si"
+                        date:
+                          type: string
+                          format: date
+
+      security:
+        - users_auth:
+            - 'loged:user'
+            - 'moder:user'
+
+  /notification:
+    post:
+      tags:
+        - Notifications
+      summary: Create new notification
+      operationId: new_notification
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                user_id:
+                  type: integer
+                  format: int64
+                product_id:
+                  type: integer
+                  format: int64 
+                  description: "can be null (writting 0)"
+                category:
+                  type: string
+                  example: "Gafas"
+                  description: "can be null (writting null)"
+                text:
+                  type: string
+                  example: "Nuevo producto en categoria e interés"
+        description: Request info
+        required: true
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: Get notifications list for current user
+      operationId: list_notifications
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+      security:
+        - users_auth:
+            - 'loged:user'
+      
+    delete:
+      tags:
+        - Notifications
+      summary: delete all notifications for current user
+      operationId: delete_notifications
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/notification/{id}':
+    delete:
+      tags:
+        - Notifications
+      summary: delete a notification for current user
+      operationId: delete_notification
+      parameters:
+        - name: id
+          in: path
+          description: notification id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
 
 
 externalDocs:
@@ -1647,7 +1986,7 @@ components:
           type: integer
           format: int64      
 
-    Trade:
+    TradeInfo:
       type: object
       properties:
         id:
@@ -1673,6 +2012,38 @@ components:
           type: string
           format: date
           example: "1999-12-24 23:45:10"    
+
+    Trade:  
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        product_title:
+          type: string
+        seller_id:
+          type: integer
+          format: int64
+        buyer_id:
+          type: integer
+          format: int64
+        closed:
+          type: boolean
+        price:
+          type: number
+          example: 9.99  
+        last_edit: 
+          type: string
+          format: date
+          example: "1999-12-24 23:45:10" 
+        products_offer:
+          type: array
+          items:
+            type: integer
+            format: int64
 
     NewProduct:
       type: object
@@ -1723,6 +2094,28 @@ components:
       xml:
         name: NewProduct
     
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64 
+        category:
+          type: string
+          example: "Gafas"
+        text:
+          type: string
+          example: "Nuevo producto en categoria e interés"
+        date:
+          type: string
+          format: date
+
     ApiResponse:
       type: object
       properties:
