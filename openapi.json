@@ -680,7 +680,7 @@
                     "list": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ProductLite"
+                        "$ref": "#/components/schemas/Product"
                       }
                     }
                   }
