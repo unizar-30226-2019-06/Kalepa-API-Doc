@@ -1660,7 +1660,7 @@ paths:
   /categories:
     get:
       tags:
-        - categories
+        - Categories
       summary: Get full list of categories
       operationId: list_categoties
       responses:
@@ -1685,6 +1685,79 @@ paths:
       security:
         - users_auth:
             - 'loged:user'
+
+
+  /upload:
+    post:
+        tags:
+          - Images
+        summary: Upload an image
+        operationId: upload_file
+        requestBody:
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/jpg:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        responses:
+          '400':
+            description: unsuccessful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+          default:
+            description: successful operation (url of image on message)
+            content:
+              application/json:
+                schema:
+                  properties:
+                    length:
+                      type: integer
+                    list:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ApiResponse'
+        security:
+          - users_auth:
+              - 'loged:user'
+
+  "/uploads/{file}":
+    get:
+        tags:
+          - Images
+        summary: Get an image
+        operationId: get_file
+        responses:
+          '400':
+            description: unsuccessful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ApiResponse'
+          default:
+            description: successful operation (url of image on message)
+            content:
+              image/png:
+                type: string
+                format: binary
+            image/jpg:
+                type: string
+                format: binary
+            image/jpeg:
+                type: string
+                format: binary
+        security:
+          - users_auth:
+              - 'loged:user'
 
 
 
