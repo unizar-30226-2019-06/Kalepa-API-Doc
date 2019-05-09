@@ -1736,6 +1736,13 @@ paths:
           - Images
         summary: Get an image
         operationId: get_file
+        parameters:
+        - name: file
+          in: path
+          description: filename
+          required: true
+          schema:
+            type: string
         responses:
           '400':
             description: unsuccessful operation
@@ -1746,18 +1753,12 @@ paths:
           default:
             description: successful operation (url of image on message)
             content:
-              image/png:
-                type: string
-                format: binary
-            image/jpg:
-                type: string
-                format: binary
-            image/jpeg:
-                type: string
-                format: binary
-        security:
-          - users_auth:
-              - 'loged:user'
+              application/json:
+                schema:
+                  type: string
+                  format: binary
+                  example: "Esto es la imagen directamente osea no te devuelve nada raro\n
+                            esto es directamente la url de una imagen, se poen tal cual y ya."
 
 
 
