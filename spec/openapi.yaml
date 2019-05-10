@@ -1760,6 +1760,16 @@ paths:
                   example: "Esto es la imagen directamente osea no te devuelve nada raro\n
                             esto es directamente la url de una imagen, se poen tal cual y ya."
 
+  /test_upload:
+    get:
+        tags:
+          - Images
+        summary: Test upload image web
+        description: "Es una ejemplo de como se sube un archivo por ejemplo en html,\n
+                      para que veais los content-type y todas las cosas esas"
+        operationId: test_upload_file
+        
+
 
 
 externalDocs:
