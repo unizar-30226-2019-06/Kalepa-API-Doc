@@ -2809,6 +2809,30 @@
           }
         }
       }
+    },
+    "/test_upload": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Test upload image web",
+        "description": "Es una ejemplo de como se sube un archivo por ejemplo en html,\n para que veais los content-type y todas las cosas esas",
+        "operationId": "test_upload_file",
+        "responses": {
+          "default": {
+            "description": "Pagina para subir un archivo de ejemplo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "example": "Esto no es de la api es para comprobar k se sube el archivo y\n devuelve la url del archivo subido"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "externalDocs": {
