@@ -1815,9 +1815,6 @@ paths:
                   example: vehiculo
         description: Request info
         required: true
-      security:
-        - users_auth:
-            - 'loged:user'
   /categories:
     get:
       tags:
