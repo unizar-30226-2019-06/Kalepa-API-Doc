@@ -1842,7 +1842,8 @@ paths:
                   list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Category'
+                      type: string
+                      example: Moda
       security:
         - users_auth:
             - 'loged:user'

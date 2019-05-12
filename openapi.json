@@ -2965,7 +2965,8 @@
                     "list": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Category"
+                        "type": "string",
+                        "example": "Moda"
                       }
                     }
                   }
