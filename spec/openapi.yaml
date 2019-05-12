@@ -143,7 +143,7 @@ paths:
           description: ID of product that needs to be updated
           required: true
           schema:
-            type: integer
+           type: integer
             format: int64
       responses:
         '405':
@@ -194,7 +194,8 @@ paths:
       security:
         - users_auth:
             - 'write:products'
-  
+
+
   /user:
     post:
       tags:
