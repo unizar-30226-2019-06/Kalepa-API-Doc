@@ -1670,8 +1670,8 @@ paths:
             schema:
               properties:
                 amount:
-                  type: float
-                  format: float64
+                  type: number
+                  example: "9.9"
                 iban:
                   type: string
                   format: ES66 0000 0000 0000 0000 0000
@@ -1716,7 +1716,7 @@ paths:
             schema:
               properties:
                 pay_date:
-                  type: date
+                  type: string
                   example: "1999-12-24 23:59:59"
         description: Confirm date
         required: true
