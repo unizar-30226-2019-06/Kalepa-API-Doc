@@ -2357,8 +2357,19 @@
             "application/json": {
               "schema": {
                 "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "User of the product of just an user"
+                  },
                   "product_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "0 if null or not include"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "example": "Porque me ha insultao"
                   }
                 }
               }
@@ -2371,6 +2382,56 @@
           {
             "users_auth": [
               "loged:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/report/{report_id}": {
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "delete report",
+        "operationId": "delete_report",
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "description": "report id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "unsuccessful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user",
+              "moder:user"
             ]
           }
         ]
@@ -2412,11 +2473,15 @@
                             "type": "integer",
                             "format": "int64"
                           },
-                          "user": {
+                          "user_id": {
                             "type": "integer",
                             "format": "int64"
                           },
-                          "product": {
+                          "user_nick": {
+                            "type": "string",
+                            "example": "Pepe"
+                          },
+                          "product_id": {
                             "type": "integer",
                             "format": "int64"
                           },
@@ -2643,6 +2708,174 @@
           {
             "users_auth": [
               "loged:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/payment": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Create a new payment",
+        "operationId": "new_payment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "example": "9.9"
+                  },
+                  "iban": {
+                    "type": "string",
+                    "format": "ES66 0000 0000 0000 0000 0000"
+                  },
+                  "product_id": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          },
+          "description": "The new payment info",
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "unsuccessful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation (id on message)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/payment/check/{id}": {
+      "put": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Confirm product payment",
+        "operationId": "putPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "pay_date": {
+                    "type": "string",
+                    "example": "1999-12-24 23:59:59"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Confirm date",
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Some error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user",
+              "moder:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/payments": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Get payment info of an user",
+        "description": "This can only be done by the logged mod user.",
+        "operationId": "getPayment",
+        "responses": {
+          "400": {
+            "description": "Some error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FullUser"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user",
+              "moder:user"
             ]
           }
         ]
