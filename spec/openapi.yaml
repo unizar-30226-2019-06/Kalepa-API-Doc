@@ -1788,21 +1788,11 @@ paths:
       summary: Get payment info of an user
       description: This can only be done by the logged mod user.
       operationId: getPayment
-      parameters:
-        - name: id
-          in: path
-          description: The name that needs to be fetched.
-          required: true
-          schema:
-            type: integer
       responses:
         '400':
           description: Some error
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
         default:
@@ -1811,13 +1801,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullUser'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/FullUser'
       security:
         - users_auth:
             - 'loged:user'
             - 'moder:user'
+
+  
   /categories:
     get:
       tags:
