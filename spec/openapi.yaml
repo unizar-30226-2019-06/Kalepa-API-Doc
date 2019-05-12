@@ -1704,13 +1704,6 @@ paths:
                 iban:
                   type: string
                   format: ES66 0000 0000 0000 0000 0000
-                pay_date:
-                  type: string
-                  format: date
-                boost_date:
-                  type: string
-                  format: date
-
                 product_id:
                   type: integer
                   format: int64
