@@ -1786,12 +1786,44 @@ paths:
         - users_auth:
             - 'loged:user'
             - 'moder:user'
+  /category:
+    post:
+      tags:
+        - Categories
+      summary: Create new category
+      operationId: new_categorie
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                cat_name:
+                  type: string
+                  example: vehiculo
+        description: Request info
+        required: true
+      security:
+        - users_auth:
+            - 'loged:user'
   /categories:
     get:
       tags:
         - Categories
       summary: Get full list of categories
-      operationId: list_categoties
+      operationId: list_categories
       responses:
         '400':
           description: unsuccessful operation
@@ -1811,6 +1843,27 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Category'
+      security:
+        - users_auth:
+            - 'loged:user'
+    delete:
+      tags:
+        - Categories
+      summary: delete all notifications for a product
+      operationId: delete_categories
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
       security:
         - users_auth:
             - 'loged:user'
