@@ -1658,35 +1658,6 @@ paths:
       security:
         - users_auth:
             - 'loged:user'
-  /categories:
-    get:
-      tags:
-        - Categories
-      summary: Get full list of categories
-      operationId: list_categoties
-      responses:
-        '400':
-          description: unsuccessful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                properties:
-                  length:
-                    type: integer
-                  list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Category'
-      security:
-        - users_auth:
-            - 'loged:user'
-
   /payment:
     post:
       tags:
@@ -1804,6 +1775,34 @@ paths:
         - users_auth:
             - 'loged:user'
             - 'moder:user'
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Get full list of categories
+      operationId: list_categoties
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+      security:
+        - users_auth:
+            - 'loged:user'
 
   /upload:
     post:
@@ -1897,7 +1896,7 @@ paths:
                   example: "Esto no es de la api es para comprobar k se sube el archivo y\n
                             devuelve la url del archivo subido"
 
-        
+
 
 
 
