@@ -1700,7 +1700,7 @@ paths:
   '/payment/check/{id}':
     put:
       tags:
-        - Payment
+        - Payments
       summary: Confirm product payment
       operationId: putPayment
       parameters:
@@ -1741,7 +1741,7 @@ paths:
   '/payments':
     get:
       tags:
-        - Payment
+        - Payments
       summary: Get payment info of an user
       description: This can only be done by the logged mod user.
       operationId: getPayment
