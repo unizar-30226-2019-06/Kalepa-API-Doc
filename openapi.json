@@ -3047,9 +3047,6 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "length": {
-                    "type": "integer"
-                  },
                   "list": {
                     "type": "array",
                     "items": {
