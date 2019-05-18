@@ -1835,7 +1835,6 @@ paths:
                   example: "vehiculo"
         description: Request info
         required: true
-
   /categories:
     get:
       tags:
