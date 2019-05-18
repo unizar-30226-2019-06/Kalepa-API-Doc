@@ -1924,7 +1924,7 @@ paths:
       tags:
         - Categories
       summary: delete all interest of an user
-      operationId: delete_categories
+      operationId: delete_interest
       responses:
         '400':
           description: unsuccessful operation
