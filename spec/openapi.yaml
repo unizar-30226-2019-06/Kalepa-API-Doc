@@ -1835,7 +1835,7 @@ paths:
                   example: "vehiculo"
         description: Request info
         required: true
-  
+
   /categories:
     get:
       tags:
@@ -1870,6 +1870,61 @@ paths:
       tags:
         - Categories
       summary: delete all notifications for a product
+      operationId: delete_categories
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  "/categories/interest":
+    post:
+      tags:
+        - Categories
+      summary: Join one list of categories to an user
+      operationId: new_interest
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: string
+                      example: "Moda"
+        description: Request info
+        required: true
+    delete:
+      tags:
+        - Categories
+      summary: delete all interest of an user
       operationId: delete_categories
       responses:
         '400':
