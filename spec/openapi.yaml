@@ -1921,7 +1921,7 @@ paths:
     delete:
       tags:
         - Categories
-      summary: delete all interest of an user
+      summary: delete a list of interest (categories) of an user
       operationId: delete_interest
       responses:
         '400':
@@ -1936,6 +1936,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties: 
+                  list:
+                    type: array
+                    items:
+                      type: string
+                      example: "Moda"
       security:
         - users_auth:
             - 'loged:user'
