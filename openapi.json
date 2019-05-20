@@ -3114,6 +3114,53 @@
             ]
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get full list of interests",
+        "operationId": "list_interest",
+        "responses": {
+          "400": {
+            "description": "unsuccessful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "length": {
+                      "type": "integer"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "Moda"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "users_auth": [
+              "loged:user"
+            ]
+          }
+        ]
       }
     },
     "/upload": {
