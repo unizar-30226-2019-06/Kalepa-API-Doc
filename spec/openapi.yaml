@@ -672,6 +672,10 @@ paths:
                         price:
                           type: number
                           example: '9.99'
+                        bid_date:
+                          type: string
+                          format: date
+                          example: "1999-12-24 23:45:10"
                         main_image:
                           type: string
                           format: url
