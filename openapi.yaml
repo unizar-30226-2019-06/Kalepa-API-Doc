@@ -677,6 +677,10 @@ paths:
                         price:
                           type: number
                           example: '9.99'
+                        bid_date:
+                          type: string
+                          format: date
+                          example: '1999-12-24 23:45:10'
                         main_image:
                           type: string
                           format: url
@@ -1697,13 +1701,18 @@ paths:
               properties:
                 amount:
                   type: number
-                  example: '9.9'
+                  format: float
+                  example: 9.9
                 iban:
                   type: string
                   format: ES66 0000 0000 0000 0000 0000
                 product_id:
                   type: integer
                   format: int64
+                boost_date:
+                  type: string
+                  format: date
+                  example: '1999-12-24'
         description: The new payment info
         required: true
       responses:
@@ -1735,16 +1744,6 @@ paths:
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                pay_date:
-                  type: string
-                  example: '1999-12-24 23:59:59'
-        description: Confirm date
-        required: true
       responses:
         '400':
           description: Some error
@@ -1781,7 +1780,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FullUser'
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pay'
       security:
         - users_auth:
             - 'loged:user'
@@ -2495,6 +2500,29 @@ components:
         date:
           type: string
           format: date
+    Pay:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        amount:
+          type: number
+          format: float
+        iban:
+          type: string
+          example: ES8093425624624
+        pay_date:
+          type: string
+          format: date
+          example: '1999-12-24 23:45:10'
+        boost_date:
+          type: string
+          format: date
+          example: '1999-12-24'
     Category:
       type: object
       properties:

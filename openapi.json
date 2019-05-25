@@ -1064,6 +1064,11 @@
                             "type": "number",
                             "example": "9.99"
                           },
+                          "bid_date": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "1999-12-24 23:45:10"
+                          },
                           "main_image": {
                             "type": "string",
                             "format": "url",
@@ -2727,7 +2732,8 @@
                 "properties": {
                   "amount": {
                     "type": "number",
-                    "example": "9.9"
+                    "format": "float",
+                    "example": 9.9
                   },
                   "iban": {
                     "type": "string",
@@ -2736,6 +2742,11 @@
                   "product_id": {
                     "type": "integer",
                     "format": "int64"
+                  },
+                  "boost_date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "1999-12-24"
                   }
                 }
               }
@@ -2793,22 +2804,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "pay_date": {
-                    "type": "string",
-                    "example": "1999-12-24 23:59:59"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Confirm date",
-          "required": true
-        },
         "responses": {
           "400": {
             "description": "Some error",
@@ -2865,7 +2860,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FullUser"
+                  "properties": {
+                    "length": {
+                      "type": "integer"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Pay"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -3898,6 +3903,37 @@
           "date": {
             "type": "string",
             "format": "date"
+          }
+        }
+      },
+      "Pay": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number",
+            "format": "float"
+          },
+          "iban": {
+            "type": "string",
+            "example": "ES8093425624624"
+          },
+          "pay_date": {
+            "type": "string",
+            "format": "date",
+            "example": "1999-12-24 23:45:10"
+          },
+          "boost_date": {
+            "type": "string",
+            "format": "date",
+            "example": "1999-12-24"
           }
         }
       },
