@@ -3382,6 +3382,10 @@
             "type": "integer",
             "example": "666999222"
           },
+          "desc": {
+            "type": "string",
+            "example": "Hi my name is pepe"
+          },
           "is_mod": {
             "type": "boolean"
           },
@@ -3451,6 +3455,10 @@
           "mail": {
             "type": "string",
             "example": "mail@email.com"
+          },
+          "desc": {
+            "type": "string",
+            "example": "Hi my name is pepe"
           },
           "phone": {
             "type": "integer",
