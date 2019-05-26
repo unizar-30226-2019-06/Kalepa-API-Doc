@@ -3946,9 +3946,17 @@
             "type": "integer",
             "format": "int64"
           },
+          "user_nick": {
+            "type": "string",
+            "example": "Pepito"
+          },
           "product_id": {
             "type": "integer",
             "format": "int64"
+          },
+          "product_name": {
+            "type": "string",
+            "example": "Producto molongo"
           },
           "category": {
             "type": "string",
