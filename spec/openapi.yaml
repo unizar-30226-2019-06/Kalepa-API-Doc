@@ -1057,12 +1057,46 @@ paths:
         - users_auth:
             - 'loged:user'
 
-  '/trade/{id}/close':  
+  '/trade/{id}/delete':  
     put:
       tags:
         - Trades
-      summary: Close a trade for loged user
+      summary: Delete a trade (for seller)
+      operationId: delete_trade
+      parameters:
+        - name: id
+          in: path
+          description: trade id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+
+  '/trade/{id}/confirm':  
+    put:
+      tags:
+        - Trades
+      summary: Switch confirm status to a trade for loged user
       operationId: close_trade
+      description: "A ver, se supone que cada usuario la confirma (si le da y el
+                    otro aun no ha confirmado la desconfirma, cuando los dos usuarios
+                    le hayan dado a confirmar pues entonces se queda bloqueada y cuenta
+                    como cerrada/confirmada y asi pues todo tiene más sentido"
       parameters:
         - name: id
           in: path
