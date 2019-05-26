@@ -1271,6 +1271,82 @@ paths:
                         title:
                           type: string
                           example: Gafas de sol
+                        user_nick:
+                          type: string
+                          example: Pepe
+                        visits:
+                          type: integer
+                          example: 45
+                        price:
+                          type: number
+                          format: float
+                          example: 9.9
+  /search/products/adv:
+    get:
+      tags:
+        - Searchs
+      summary: Search products Adv
+      operationId: search_product_adv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                  description: The title of the producto or alike
+                  example: Producto Molongo
+                price_min:
+                  type: number
+                  example: 0.98
+                price_max:
+                  type: number
+                  example: 1.98
+                descript:
+                  type: string
+                  example: Wonderful product
+                category:
+                  type: string
+                  example: Moda
+                place:
+                  type: string
+                  example: Madrid
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  length:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                        title:
+                          type: string
+                          example: Gafas de sol
+                        user_nick:
+                          type: string
+                          example: Pepe
+                        visits:
+                          type: integer
+                          example: 45
+                        price:
+                          type: number
+                          format: float
+                          example: 9.9
   /search/users:
     get:
       tags:
