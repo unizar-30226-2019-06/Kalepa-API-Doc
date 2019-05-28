@@ -2543,6 +2543,10 @@ components:
           format: int64
         closed:
           type: boolean
+        closed_s:
+          type: boolean
+        closed_b:
+          type: boolean
         price:
           type: number
           example: 9.99  
@@ -2569,6 +2573,10 @@ components:
           type: integer
           format: int64
         closed:
+          type: boolean
+        closed_s:
+          type: boolean
+        closed_b:
           type: boolean
         price:
           type: number
