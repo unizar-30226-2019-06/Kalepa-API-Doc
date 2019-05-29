@@ -1443,7 +1443,7 @@ paths:
         - users_auth:
             - 'loged:user'
 
-  '/comment/{comment_id}':
+  '/comment/{comment_id}/del':
     delete:
       tags:
         - Comments
