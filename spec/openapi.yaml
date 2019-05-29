@@ -2433,6 +2433,9 @@ components:
           items:
             type: string
             example: Moda
+        sold:
+          type: boolean
+          description: "Si esta vendido o no"
         title:
           type: string
           example: Producto Molongo
