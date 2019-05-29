@@ -1443,6 +1443,37 @@ paths:
         - users_auth:
             - 'loged:user'
 
+  '/comment/{comment_id}':
+    delete:
+      tags:
+        - Comments
+      summary: Delete comment
+      operationId: delete_comment
+      parameters:
+        - name: comment_id
+          in: path
+          description: comment id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - users_auth:
+            - 'loged:user'
+            - 'modder:user'
+
   '/comments/{user_id}':
     get:
       tags:
