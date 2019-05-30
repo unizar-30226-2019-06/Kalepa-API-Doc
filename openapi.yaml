@@ -1945,6 +1945,7 @@ paths:
         - Categories
       summary: Create new category
       operationId: new_categorie
+      deprecated: true
       responses:
         '400':
           description: unsuccessful operation
