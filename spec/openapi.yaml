@@ -1972,6 +1972,7 @@ paths:
         - Categories
       summary: Create new category
       operationId: new_categorie
+      deprecated: true
       responses:
         '400':
           description: unsuccessful operation
@@ -1995,7 +1996,7 @@ paths:
                   example: "vehiculo"
         description: Request info
         required: true
-        
+
   /categories:
     get:
       tags:
