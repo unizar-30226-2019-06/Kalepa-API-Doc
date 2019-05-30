@@ -1274,6 +1274,12 @@ paths:
                         user_nick:
                           type: string
                           example: Pepe
+                        bid_date:
+                          type: string
+                          format: date
+                        main_img:
+                          type: string
+                          format: url
                         visits:
                           type: integer
                           example: 45
@@ -1343,6 +1349,12 @@ paths:
                         visits:
                           type: integer
                           example: 45
+                        bid_date:
+                          type: string
+                          format: date
+                        main_img:
+                          type: string
+                          format: url
                         price:
                           type: number
                           format: float
@@ -1982,27 +1994,6 @@ paths:
                     items:
                       type: string
                       example: Moda
-      security:
-        - users_auth:
-            - 'loged:user'
-    delete:
-      tags:
-        - Categories
-      summary: delete all notifications for a product
-      operationId: delete_categories
-      responses:
-        '400':
-          description: unsuccessful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        default:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
       security:
         - users_auth:
             - 'loged:user'
