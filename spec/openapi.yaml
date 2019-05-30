@@ -1290,7 +1290,7 @@ paths:
                           example: 9.9
 
   /search/products/adv:
-    get:
+    post:
       tags:
         - Searchs
       summary: Search products Adv
