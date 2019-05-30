@@ -1282,7 +1282,7 @@ paths:
                           format: float
                           example: 9.9
   /search/products/adv:
-    get:
+    post:
       tags:
         - Searchs
       summary: Search products Adv
@@ -2397,6 +2397,9 @@ components:
           items:
             type: string
             example: Moda
+        sold:
+          type: boolean
+          description: Si esta vendido o no
         title:
           type: string
           example: Producto Molongo

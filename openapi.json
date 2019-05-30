@@ -2058,7 +2058,7 @@
       }
     },
     "/search/products/adv": {
-      "get": {
+      "post": {
         "tags": [
           "Searchs"
         ],
@@ -3794,6 +3794,10 @@
               "type": "string",
               "example": "Moda"
             }
+          },
+          "sold": {
+            "type": "boolean",
+            "description": "Si esta vendido o no"
           },
           "title": {
             "type": "string",
